@@ -1,0 +1,77 @@
+.header {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background-color: #0a0c0f;
+  &_left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    &_logo {
+      width: 180px;
+    }
+    &_actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      list-style-type: none;
+      &_item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #fff;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        &:hover {
+          opacity: 0.7;
+        }
+        & > svg {
+          width: 16px;
+          height: 19px;
+        }
+        &_text {
+          font-size: 16px;
+          font-weight: 700;
+          text-transform: capitalize;
+        }
+      }
+    }
+  }
+  &_right {
+    width: 240px;
+  }
+  &_under {
+    background-color: #0a0c0f;
+    height: 48px;
+    border-bottom: 1px solid #111;
+    border-top: 1px solid #1a1a1a;
+    padding: 0 10px;
+    &_lists {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      &_item {
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease;
+        &:hover {
+          opacity: 0.7;
+        }
+        &_text {
+          color: #fff;
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

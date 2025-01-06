@@ -1,0 +1,18 @@
+.search_header {
+  background: rgb(255 255 255 / 0.2);
+  border-radius: 20px;
+  line-height: 18px;
+  padding: 10px 18px;
+  font-size: 13px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  &_input {
+    outline: none;
+    border: none;
+    height: 100%;
+    width: 100%;
+    color: #e5e5e5;
+  }
+}
