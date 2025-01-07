@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  gap: 40px;
   background-color: #0a0c0f;
   &_left {
     flex: 1;
@@ -43,6 +44,26 @@
   }
   &_right {
     width: 240px;
+  }
+  &_auth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    &_component {
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      background-color: transparent;
+      transition: all 0.4s ease;
+      &:hover {
+        background-color: #272727;
+      }
+      &_text {
+        color: #eee;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
   }
   &_under {
     background-color: #0a0c0f;

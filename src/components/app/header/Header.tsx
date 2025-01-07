@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import { BookMarked, Edit, History, Tag } from "lucide-react";
-import SearchHeader from "@/features/search/search-header";
+import SearchHeader from "@/components/ui/search/search-header";
 const Header = () => {
   return (
     <>
@@ -24,7 +24,7 @@ const Header = () => {
             <li className={styles.header_left_actions_item}>
               <Edit />
               <span className={styles.header_left_actions_item_text}>
-                Artist
+                Categories
               </span>
             </li>
 
@@ -44,6 +44,14 @@ const Header = () => {
         </div>
         <div className={styles.header_right}>
           <SearchHeader />
+        </div>
+        <div className={styles.header_auth}>
+          <div className={styles.header_auth_component}>
+            <span className={styles.header_auth_component_text}>Log in</span>
+          </div>
+          <div className={styles.header_auth_component}>
+            <span className={styles.header_auth_component_text}>Register</span>
+          </div>
         </div>
       </div>
       <div className={styles.header_under}>

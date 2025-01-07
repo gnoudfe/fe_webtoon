@@ -1,0 +1,19 @@
+.section_header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &_title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ddd;
+    text-transform: uppercase;
+  }
+  &_tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style-type: none;
+    cursor: pointer;
+  }
+}

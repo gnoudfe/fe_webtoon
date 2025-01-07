@@ -1,0 +1,6 @@
+.list_story {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
+}
