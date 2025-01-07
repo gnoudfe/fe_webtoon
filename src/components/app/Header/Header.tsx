@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import { BookMarked, Edit, History, Tag } from "lucide-react";
-import SearchHeader from "@/features/search/search_header";
+import SearchHeader from "@/features/search/search-header";
 const Header = () => {
   return (
     <>
