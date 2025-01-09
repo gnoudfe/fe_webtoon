@@ -1,0 +1,52 @@
+.auth_form {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &_container {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    box-shadow: 0px 1px 30px rgb(0 0 0 / 1);
+    &_input {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+    &_inner {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      &_title {
+        color: #eee;
+        font-size: 24px;
+        font-weight: 500;
+        text-align: center;
+      }
+      &_sign_up {
+        text-align: center;
+        color: #7a7777;
+        font-size: 14px;
+        font-weight: 500;
+        & > a {
+          color: #fff;
+          transition: opacity 0.3s ease;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+.error {
+  font-size: 14px;
+  color: rgb(202, 16, 16);
+  font-weight: 500;
+}

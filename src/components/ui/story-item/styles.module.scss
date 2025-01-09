@@ -10,8 +10,11 @@
   cursor: pointer;
   &_thumbnail {
     min-width: 80px;
+    max-width: 80px;
+    height: 110px;
     & > img {
       width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 8px;
     }

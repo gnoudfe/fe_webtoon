@@ -7,13 +7,17 @@ const StoryCard = () => {
   return (
     <Link className={styles.story_card} href={"/read-hentai/stop-smoking"}>
       <div className={styles.story_card_thumbnail}>
-        <Image
+        {/* <Image
           src={
             "https://media.hentai18.net/images/thumbs/i-have-to-sleep-with-a-stranger.jpg"
           }
           alt="story thumbnail"
           height={362}
           width={300}
+        /> */}
+        <img
+          src="https://static.vecteezy.com/system/resources/thumbnails/023/192/562/small_2x/sport-car-running-on-the-road-in-future-city-created-with-generative-ai-free-photo.jpg"
+          alt=""
         />
       </div>
       <div className={styles.story_card_infor}>

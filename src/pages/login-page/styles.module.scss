@@ -1,0 +1,17 @@
+.login_page {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  &_bg {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

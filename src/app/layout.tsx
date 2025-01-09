@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.scss";
+import MainProvider from "@/constant/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Free Hentai Manhwa",
+  title: "Free  Manhwa",
   description:
-    "Read free hentai manga, hentai manhwa, and porn comics at Hentai18. Watch uncensored hentai anime porn videos online and dive into a world of thrilling...",
+    "Read free  manga,  manhwa, and porn comics at 18. Watch uncensored  anime porn videos online and dive into a world of thrilling...",
 };
 
 export default function RootLayout({
@@ -28,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <MainProvider>{children}</MainProvider>
       </body>
     </html>
   );

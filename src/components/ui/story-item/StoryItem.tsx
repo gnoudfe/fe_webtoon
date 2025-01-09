@@ -6,12 +6,13 @@ const StoryItem = () => {
   return (
     <div className={styles.story_item}>
       <div className={styles.story_item_thumbnail}>
-        <Image
+        {/* <Image
           src={"https://media.hentai18.net/images/thumbs/stop-smoking.jpg"}
           alt="thumbnail image"
           width={80}
           height={110}
-        />
+        /> */}
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/023/192/562/small_2x/sport-car-running-on-the-road-in-future-city-created-with-generative-ai-free-photo.jpg" alt="" />
       </div>
       <div className={styles.story_item_infor}>
         <h4 className={styles.story_item_infor_title}>Stop Smoking</h4>
