@@ -68,6 +68,8 @@ const SignupForm = () => {
 
   return (
     <div className={styles.auth_form}>
+      <div className={styles.auth_form_cover}></div>
+
       <form className={styles.auth_form_container} onSubmit={handleSubmit}>
         <div className={styles.auth_form_container_inner}>
           <h2 className={styles.auth_form_container_inner_title}>Sign Up</h2>

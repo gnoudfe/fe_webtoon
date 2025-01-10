@@ -1,9 +1,20 @@
 .auth_form {
-  width: 50%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  &_cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/023/192/562/small_2x/sport-car-running-on-the-road-in-future-city-created-with-generative-ai-free-photo.jpg");
+    background-repeat: round;
+    filter: blur(10px);
+  }
   &_container {
     display: block;
     position: relative;
@@ -11,6 +22,8 @@
     max-width: 450px;
     padding: 40px;
     box-shadow: 0px 1px 30px rgb(0 0 0 / 1);
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 12px;
     &_input {
       display: flex;
       flex-direction: column;
