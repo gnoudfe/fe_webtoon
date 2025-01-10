@@ -1,10 +1,19 @@
+"use client";
 import React from "react";
 import styles from "./styles.module.scss";
-import Image from "next/image";
+// import Image from "next/image";
 import { BookMarked, Edit, History, Tag } from "lucide-react";
 import SearchHeader from "@/components/ui/search/search-header";
 import Link from "next/link";
+import { useVerifyUser } from "@/services/queries/useAuth";
+import { useGlobalStore } from "@/stores/state";
+import { Avatar } from "@/components/ui/avatar";
 const Header = () => {
+  const { isLoggedIn } = useGlobalStore();
+  const { data: user, isLoading } = useVerifyUser();
+  if (isLoading) {
+    return null;
+  }
   return (
     <>
       <div className={styles.header}>
@@ -45,22 +54,23 @@ const Header = () => {
         </div>
         <div className={styles.header_right}>
           <SearchHeader />
-        </div>
-        {/* Auth */}
-        <div className={styles.header_auth}>
-          <Link href={"/login"} className={styles.header_auth_component}>
-            <span className={styles.header_auth_component_text}>Log in</span>
-          </Link>
-          <Link href={"/signup"} className={styles.header_auth_component}>
-            <span className={styles.header_auth_component_text}>Register</span>
-          </Link>
-        </div>
-        {/* Profile Avatar */}
-        <div className={styles.header_avatar}>
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/023/192/562/small_2x/sport-car-running-on-the-road-in-future-city-created-with-generative-ai-free-photo.jpg"
-            alt=""
-          />
+          {/* Auth */}
+          {!isLoggedIn && (
+            <div className={styles.header_auth}>
+              <Link href={"/login"} className={styles.header_auth_component}>
+                <span className={styles.header_auth_component_text}>
+                  Log in
+                </span>
+              </Link>
+              <Link href={"/signup"} className={styles.header_auth_component}>
+                <span className={styles.header_auth_component_text}>
+                  Register
+                </span>
+              </Link>
+            </div>
+          )}
+          {/* Profile Avatar */}
+          {isLoggedIn && <Avatar userData={user?.data} isShowInfor={true} />}
         </div>
       </div>
       <div className={styles.header_under}>

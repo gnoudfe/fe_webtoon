@@ -5,36 +5,49 @@ import Link from "next/link";
 import ButtonAuth from "../button-auth";
 import { validateForm } from "@/utils/validateForm";
 import InputField from "../input";
-import { useLoginMutation } from "@/services/queries/useAuth";
+import { useLoginMutation, useVerifyUser } from "@/services/queries/useAuth";
 import { HttpStatusCode } from "@/constant/httpStatusCode.enum";
 import { useRouter } from "next/navigation";
+import { useGlobalStore } from "@/stores/state";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [responseMessage, setResponseMessage] = useState("");
   const [errors, setErrors] = useState<{
     username?: string;
     password?: string;
   }>({});
+  const { setIsLoggedIn } = useGlobalStore();
+  const { refetch } = useVerifyUser();
   const loginMutation = useLoginMutation();
   const router = useRouter();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validateForm({ username, password });
+    if (isLoading) return;
+    if (responseMessage) {
+      setResponseMessage("");
+    }
+    const validationErrors = validateForm({
+      username,
+      password,
+      isLogin: true,
+    });
     setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length === 0) {
       try {
         setIsLoading(true);
         const response = await loginMutation.mutateAsync({
           username,
-          password,
+          password: btoa(password),
         });
-        console.log("response", response);
         if (response.status === HttpStatusCode.Ok) {
+          setIsLoggedIn(true);
+          refetch();
           router.push("/");
+        } else {
+          setResponseMessage(response.message);
         }
       } catch (error) {
         console.log(error);
@@ -67,6 +80,9 @@ const LoginForm = () => {
             />
             {errors.password && (
               <p className={styles.error}>{errors.password}</p>
+            )}
+            {responseMessage && (
+              <p className={styles.error}>{responseMessage}</p>
             )}
           </div>
           <p className={styles.auth_form_container_inner_sign_up}>

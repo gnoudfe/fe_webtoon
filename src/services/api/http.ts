@@ -25,9 +25,16 @@ export class ApiClient {
   private getHeaders(config: CustomFetchConfig): Record<string, string> {
     const headers = { ...this.headers };
 
+    const token = this.isClient() ? "" : config.token;
+
+    if (token) {
+      headers.Authorization = token;
+    }
+
     if (config.body && config.method !== "GET") {
       headers["Content-Type"] = "application/json";
     }
+
     return headers;
   }
 
@@ -38,16 +45,15 @@ export class ApiClient {
     path: string;
     config?: CustomFetchConfig;
   }): Promise<any> {
-    const { method = "GET", body } = config;
+    const { method = "GET", body, ...restConfig } = config;
     const headers = this.getHeaders(config);
     const fetchConfig: RequestInit = {
       method,
       headers,
       credentials: "include",
       body: method !== "GET" && body ? JSON.stringify(body) : undefined,
-      next: {
-        revalidate: 60,
-      },
+      cache: "no-cache" as RequestCache,
+      ...restConfig,
     };
 
     try {

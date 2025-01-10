@@ -75,3 +75,7 @@ a {
   max-width: 282px;
   margin-right: 20px;
 }
+
+input[type="file"] {
+  display: none;
+}

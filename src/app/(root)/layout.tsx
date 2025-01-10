@@ -1,6 +1,6 @@
 import Footer from "@/components/app/footer";
 import Header from "@/components/app/header";
-import Sidebar from "@/components/app/sidebar";
+// import Sidebar from "@/components/app/sidebar";
 import React from "react";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
@@ -8,7 +8,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       <main className="layout_root">
-        <Sidebar />
+        {/* <Sidebar /> */}
         {children}
       </main>
       <Footer />

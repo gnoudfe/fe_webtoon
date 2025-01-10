@@ -5,13 +5,17 @@ interface InputFieldProps {
   type: string;
   placeholder: string;
   value: string; // Thêm prop value để nhận giá trị từ parent component
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Hàm xử lý thay đổi giá trị
+  id?: string;
+  readOnly?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Hàm xử lý thay đổi giá trị
 }
 
 const InputField = ({
   type,
   placeholder,
   value,
+  id,
+  readOnly,
   onChange,
 }: InputFieldProps) => {
   return (
@@ -20,7 +24,9 @@ const InputField = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      readOnly={readOnly}
       className={styles.auth_form_input}
+      id={id}
     />
   );
 };

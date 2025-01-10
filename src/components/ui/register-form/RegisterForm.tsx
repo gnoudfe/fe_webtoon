@@ -12,9 +12,12 @@ import { useRouter } from "next/navigation";
 const SignupForm = () => {
   // Khởi tạo state cho username, password và confirm password
   const [username, setUsername] = useState("");
+  const [fullname, setFullname] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [response, setResponse] = useState("");
   const [errors, setErrors] = useState<{
+    fullname?: string;
     username?: string;
     password?: string;
   }>({});
@@ -31,19 +34,29 @@ const SignupForm = () => {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
+  const handleFullnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFullname(e.target.value);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
+    if (isLoading) return;
+    if (response) {
+      setResponse("");
+    }
     e.preventDefault();
-    const validationErrors = validateForm({ username, password });
+    const validationErrors = validateForm({ fullname, username, password });
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
       try {
         setIsLoading(true);
         const response = await registerMutation.mutateAsync({
+          fullname,
           username,
-          password,
+          password: btoa(password),
         });
         if (response.status === HttpStatusCode.Created) {
           router.push("/login");
+        } else {
+          setResponse(response.message);
         }
       } catch (error) {
         console.log(error);
@@ -59,7 +72,15 @@ const SignupForm = () => {
         <div className={styles.auth_form_container_inner}>
           <h2 className={styles.auth_form_container_inner_title}>Sign Up</h2>
           <div className={styles.auth_form_container_input}>
-            {/* Tạo two-way binding với state */}
+            <InputField
+              value={fullname}
+              onChange={handleFullnameChange}
+              type="text"
+              placeholder="Fullname"
+            />
+            {errors.fullname && (
+              <p className={styles.error}>{errors.fullname}</p>
+            )}
             <InputField
               type="text"
               placeholder="Username"
@@ -78,6 +99,7 @@ const SignupForm = () => {
             {errors.password && (
               <p className={styles.error}>{errors.password}</p>
             )}
+            {response && <p className={styles.error}>{response}</p>}
           </div>
           <p className={styles.auth_form_container_inner_sign_up}>
             Already have an account? <Link href="/login">Sign in</Link>

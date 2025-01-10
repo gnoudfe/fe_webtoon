@@ -5,7 +5,12 @@ export interface CustomFetchConfig {
   token?: string;
 }
 export interface AuthCredentials {
+  fullname?: string;
   username: string;
   password: string;
 }
 
+export interface ChangePassword {
+  oldPassword: string;
+  newPassword: string;
+}
