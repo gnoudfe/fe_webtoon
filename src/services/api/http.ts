@@ -31,8 +31,13 @@ export class ApiClient {
       headers.Authorization = token;
     }
 
-    if (config.body && config.method !== "GET") {
-      headers["Content-Type"] = "application/json";
+    // Kiểm tra nếu body là FormData thì không thiết lập Content-Type
+    if (
+      config.body &&
+      !(config.body instanceof FormData) &&
+      config.method !== "GET"
+    ) {
+      headers["Content-Type"] = "application/json"; // Giữ Content-Type là "application/json" nếu không phải FormData
     }
 
     return headers;
@@ -47,11 +52,18 @@ export class ApiClient {
   }): Promise<any> {
     const { method = "GET", body, ...restConfig } = config;
     const headers = this.getHeaders(config);
+
+    const isFormData = body instanceof FormData;
     const fetchConfig: RequestInit = {
       method,
       headers,
       credentials: "include",
-      body: method !== "GET" && body ? JSON.stringify(body) : undefined,
+      body:
+        method !== "GET" && body
+          ? isFormData
+            ? body // Nếu body là FormData, truyền nguyên vẹn
+            : JSON.stringify(body) // Nếu không phải FormData, stringify
+          : undefined,
       cache: "no-cache" as RequestCache,
       ...restConfig,
     };

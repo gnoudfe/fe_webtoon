@@ -60,6 +60,16 @@ class AuthWebtoonApiRequest {
       },
     });
   }
+
+  public ChangeAvatar({ body }: { body: FormData }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.AUTH.CHANGE_AVATAR,
+      config: {
+        method: "POST",
+        body,
+      },
+    });
+  }
 }
 
 const AuthWebtoonApi = new AuthWebtoonApiRequest();

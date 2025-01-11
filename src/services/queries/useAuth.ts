@@ -61,8 +61,22 @@ export const useLogoutMutation = (options?: UseMutationOptions<any>) => {
 
   return useMutation({
     ...options,
-    mutationFn: () => AuthWebtoonApi.Logout(),
+    mutationFn: async () => await AuthWebtoonApi.Logout(),
     onSuccess: () => setIsLoggedIn(false),
     mutationKey: ["logout"],
+  });
+};
+export const useChangeAvatarMutation = () => {
+  return useMutation({
+    mutationFn: async (body: any) => {
+      console.log("body", body);
+      const response = await AuthWebtoonApi.ChangeAvatar({ body: body });
+      if (response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message || "Failed to change avatar");
+      }
+    },
+    mutationKey: ["changeAvatar"],
   });
 };

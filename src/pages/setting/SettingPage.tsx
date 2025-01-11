@@ -1,20 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import styles from "./styles.module.scss";
 import { Avatar } from "@/components/ui/avatar";
 import {
+  useChangeAvatarMutation,
   useChangePasswordMutation,
+  useLogoutMutation,
   useVerifyUser,
 } from "@/services/queries/useAuth";
 import { LogOutIcon, SaveAll } from "lucide-react";
 import InputField from "@/components/ui/input";
 import { validateForm } from "@/utils/validateForm";
+import { useRouter } from "next/navigation";
 const SettingPageSc = () => {
   const [password, setPassword] = React.useState("");
   const [newPassword, SetNewPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [response, setResponse] = React.useState("");
+  const [previewImage, setPreviewImage] = React.useState<string | null>(null);
+  const [file, setFile] = React.useState<File | null>(null);
   const changePasswordMutation = useChangePasswordMutation();
+  const router = useRouter();
   const [errors, setErrors] = React.useState<{
     password?: string;
     newPassword?: string;
@@ -55,6 +62,43 @@ const SettingPageSc = () => {
       }
     }
   };
+
+  const logoutMutation = useLogoutMutation();
+  const handleLogout = async () => {
+    try {
+      const response = await logoutMutation.mutateAsync();
+      if (response.status === "success") {
+        router.push("/");
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  const changeAvatarMutation = useChangeAvatarMutation();
+
+  const handleChangeAvatar = async () => {
+    if (!file) return;
+    const formData = new FormData();
+
+    formData.append("avatar", file);
+
+    try {
+      await changeAvatarMutation.mutateAsync(formData);
+      alert("Avatar updated successfully!");
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+    }
+  };
+
   if (isLoading) return null;
   return (
     <div className={styles.setting_page}>
@@ -66,29 +110,57 @@ const SettingPageSc = () => {
           </p>
         </div>
 
-        <div className={styles.setting_page_container_inner}>
-          <div className={styles.setting_page_container_avatar}>
-            <Avatar userData={user?.data} size="xl" />
-            <div className={styles.setting_page_container_avatar_infor}>
-              <h3 className={styles.setting_page_container_avatar_infor_name}>
-                Profile Picture
-              </h3>
-              <p
-                className={
-                  styles.setting_page_container_avatar_infor_description
-                }
-              >
-                JPEG, PNG and GID under 2MB
-              </p>
+        <div className={styles.setting_page_container_outer}>
+          <div className={styles.setting_page_container_inner}>
+            <div className={styles.setting_page_container_avatar}>
+              <Avatar
+                userData={user?.data}
+                size="xl"
+                previewImage={previewImage}
+              />
+              <div className={styles.setting_page_container_avatar_infor}>
+                <h3 className={styles.setting_page_container_avatar_infor_name}>
+                  Profile Picture
+                </h3>
+                <p
+                  className={
+                    styles.setting_page_container_avatar_infor_description
+                  }
+                >
+                  JPEG, PNG and GIF under 2MB
+                </p>
+              </div>
             </div>
+            <label
+              htmlFor="upload-avatar"
+              className={styles.setting_page_container_inner_btn}
+            >
+              <span>Upload new avatar</span>
+              <input
+                type="file"
+                onChange={handleImageUpload}
+                name="upload-avatar"
+                id="upload-avatar"
+              />
+            </label>
           </div>
-          <label
-            htmlFor="upload-avatar"
-            className={styles.setting_page_container_inner_btn}
-          >
-            <span>Upload new avatar</span>
-            <input type="file" name="upload-avatar" id="upload-avatar" />
-          </label>
+          {previewImage && (
+            <button
+              className={`${styles.setting_page_lists_button}`}
+              onClick={handleChangeAvatar}
+            >
+              {changeAvatarMutation.isPending ? (
+                <>
+                  <span>Loading...</span>
+                </>
+              ) : (
+                <>
+                  <SaveAll color="#fff" width={22} height={22} />
+                  <span>Save</span>
+                </>
+              )}
+            </button>
+          )}
         </div>
 
         <div className={styles.setting_page_lists_container}>
@@ -151,7 +223,9 @@ const SettingPageSc = () => {
                 {errors.password && password && (
                   <p className={styles.error}>{errors.password}</p>
                 )}
-                {response && password && newPassword && <p className={styles.error}>{response}</p>}
+                {response && password && newPassword && (
+                  <p className={styles.error}>{response}</p>
+                )}
               </div>
               <div className={styles.setting_page_lists_input_container}>
                 <label
@@ -173,13 +247,7 @@ const SettingPageSc = () => {
               </div>
             </div>
             {password && newPassword && (
-              <button
-                className={`${styles.setting_page_lists_button} ${
-                  password && newPassword
-                    ? styles.setting_page_lists_button_active
-                    : ""
-                }`}
-              >
+              <button className={`${styles.setting_page_lists_button}`}>
                 {loading ? (
                   <>
                     <span>Loading...</span>
@@ -200,7 +268,10 @@ const SettingPageSc = () => {
             <h3> Security account</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
           </div>
-          <button className={styles.setting_page_lists_bottom_button}>
+          <button
+            className={styles.setting_page_lists_bottom_button}
+            onClick={handleLogout}
+          >
             <LogOutIcon />
             <span>Log out</span>
           </button>

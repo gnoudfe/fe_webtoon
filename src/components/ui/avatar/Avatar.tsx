@@ -16,12 +16,15 @@ interface AvatarProps {
     createdAt?: string;
     updatedAt?: string;
   };
+  previewImage?: string | null;
+  isShow?: boolean;
   isShowInfor?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 const Avatar = ({
   userData,
+  previewImage,
   isShowInfor = false,
   size = "md",
 }: AvatarProps) => {
@@ -35,21 +38,16 @@ const Avatar = ({
       className={`${styles.header_avatar} ${styles[`header_avatar_${size}`]}`}
       onClick={handleClickAvatar}
     >
-      <img src={userData?.avatar} alt="" />
+      <img
+        src={previewImage ? previewImage : userData?.avatar}
+        alt="avatar user"
+      />
       {isShowInfor && <AvatarInfor isShow={isShow} userData={userData} />}
     </div>
   );
 };
 
-interface AvatarInforProps {
-  isShow: boolean;
-  userData: {
-    avatar?: string;
-    username: string;
-  };
-}
-
-const AvatarInfor = ({ isShow, userData }: AvatarInforProps) => {
+const AvatarInfor = ({ isShow, userData }: AvatarProps) => {
   const logoutMutation = useLogoutMutation();
   const handleLogout = async () => {
     try {

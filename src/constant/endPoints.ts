@@ -9,6 +9,7 @@ export const APP_API_ENDPOINT = Object.freeze({
     REGISTER: "/register",
     VERITY: "/getUser",
     LOGOUT: "/logout",
-    CHANGE_PASSWORD: '/change-password'
+    CHANGE_PASSWORD: "/change-password",
+    CHANGE_AVATAR: "/updateAvatar",
   },
 });
