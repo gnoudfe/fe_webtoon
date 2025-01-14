@@ -8,6 +8,9 @@
   padding-bottom: 20px;
   overflow: hidden;
   cursor: pointer;
+  &:last-child {
+    border-bottom: none;
+  }
   &_thumbnail {
     min-width: 80px;
     max-width: 80px;

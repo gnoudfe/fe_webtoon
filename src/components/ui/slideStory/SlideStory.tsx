@@ -7,15 +7,12 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/autoplay";
-import { PaginationDataType, StoryData } from "@/types/story";
+import {
+  StoryResponseData,
+} from "@/types/story";
 
 interface SlideStoryProps {
-  highlightStories: {
-    message: string;
-    status: string;
-    data: StoryData[];
-    pagingation: PaginationDataType;
-  };
+  highlightStories: StoryResponseData;
 }
 
 const SlideStory = ({ highlightStories }: SlideStoryProps) => {

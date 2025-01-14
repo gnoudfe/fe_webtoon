@@ -1,16 +1,11 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import StoryCard from "../story-card";
-import { PaginationDataType, StoryData } from "@/types/story";
+import { StoryResponseData } from "@/types/story";
 
 interface ListStoryProps {
   type?: string;
-  latestStoriesData: {
-    message: string;
-    status: string;
-    data: StoryData[];
-    pagingation: PaginationDataType;
-  };
+  latestStoriesData: StoryResponseData;
 }
 
 const ListStory = ({ latestStoriesData, type = "normal" }: ListStoryProps) => {

@@ -5,13 +5,17 @@ const SummaryContent = () => {
     <div className={styles.summary_content}>
       <h4 className={styles.summary_content_title}>Summary</h4>
       <span className={styles.summary_content_text}>
-        Hắn bị bạch nhãn lang lừa gạt đến táng gia bại sản, cận kề cái chết,
-        suýt trở thành trưởng lão số tuổi thọ ngắn nhất trong lịch sử tông
-        môn.....May mắn thay, hắn thức tỉnh bàn tay vàng, trói định hệ thống thụ
-        đồ phản lợi, tặng đan dược rác rưởi cho đồ đệ, hắn nhận lại đan dược cực
-        phẩm! Đầu tiên trả thù, sau đó làm giàu, vươn lên trở thành tiên đế mạnh
-        nhất! Dược sư dịu dàng, đế nữ quyến rũ, kiếm đạo chí tôn....Tất cả đều
-        là đồ đệ của ta!
+        Min Harang’s future is clear. Go to KNU law school, become a prosecutor,
+        and be successful. At least, that’s what her mother wants. But when
+        Harang fails the entrance exam, she has to come to terms with the fact
+        that her mother’s wishes might not line up with Harang’s own. Out
+        sulking in the rain after an explosive argument, help comes in the form
+        of her sex-crazed neighbor – the very man who’s constant moaning
+        distracted her from studying! And since it’s his fault anyway, it’s only
+        fair that he take responsibility, right? But there’s more to the man
+        that first appears, and soon Harang finds herself coming face to face
+        with a different form of family. It just goes to show that home is truly
+        where the heart is.
       </span>
     </div>
   );

@@ -18,6 +18,13 @@ export interface StoryData {
   };
 }
 
+export interface StoryResponseData {
+  message: string;
+  status: string;
+  data: StoryData[];
+  pagination: PaginationDataType;
+}
+
 export interface PaginationDataType {
   currentPage: number;
   totalPages: number;

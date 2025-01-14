@@ -7,9 +7,9 @@ import { formatTime } from "@/utils/formatTime";
 
 interface StoryCardProps {
   storyData: StoryData;
-  type: "normal" | "detail";
+  type?: "normal" | "detail";
 }
-const StoryCard = ({ storyData, type }: StoryCardProps) => {
+const StoryCard = ({ storyData, type = "normal" }: StoryCardProps) => {
   return type === "normal" ? (
     <Link
       className={styles.story_card}

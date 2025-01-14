@@ -1,0 +1,38 @@
+.list_chapters {
+  padding: 12px;
+  background-color: #1b1a1a;
+  border-radius: 8px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 23px;
+  &_title {
+    color: #fff;
+  }
+  &_grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 8px;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 300px;
+  }
+}
+.chapter_item {
+  display: block;
+  font-weight: 400;
+  background: #111;
+  padding: 10px 10px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  &_title {
+    color: #fff;
+    font-size: 14px;
+  }
+  &_date {
+    color: #777777;
+    font-size: 13px;
+  }
+}

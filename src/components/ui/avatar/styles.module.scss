@@ -2,22 +2,27 @@
   cursor: pointer;
   position: relative;
   &_md {
+    max-width: 40px;
     min-width: 40px;
     height: 40px;
   }
   &_sm {
+    max-width: 32px;
     min-width: 32px;
     height: 32px;
   }
   &_xs {
+    max-width: 24px;
     min-width: 24px;
     height: 24px;
   }
   &_lg {
+    max-width: 56px;
     min-width: 56px;
     height: 56px;
   }
   &_xl {
+    max-width: 80px;
     min-width: 80px;
     height: 80px;
   }

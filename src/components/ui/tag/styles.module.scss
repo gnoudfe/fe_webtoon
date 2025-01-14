@@ -11,5 +11,10 @@
     color: #ddd;
     font-weight: 400;
     font-size: 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    max-width: 90px;
   }
 }
