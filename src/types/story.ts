@@ -2,7 +2,6 @@ export interface StoryData {
   _id: string;
   slug: string;
   followers_count: number;
-  postTime: string;
   rating: number;
   tags?: {
     slug: string;
@@ -22,6 +21,6 @@ export interface StoryData {
 export interface PaginationDataType {
   currentPage: number;
   totalPages: number;
-  totalStories: 1;
+  totalStories: number;
   limit: number;
 }
