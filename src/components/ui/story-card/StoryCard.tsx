@@ -7,9 +7,10 @@ import { formatTime } from "@/utils/formatTime";
 
 interface StoryCardProps {
   storyData: StoryData;
+  type: "normal" | "detail";
 }
-const StoryCard = ({ storyData }: StoryCardProps) => {
-  return (
+const StoryCard = ({ storyData, type }: StoryCardProps) => {
+  return type === "normal" ? (
     <Link
       className={styles.story_card}
       href={`/read-hentai/${storyData?.slug}`}
@@ -27,6 +28,12 @@ const StoryCard = ({ storyData }: StoryCardProps) => {
         </div>
       </div>
     </Link>
+  ) : (
+    <div className={styles.story_card}>
+      <div className={styles.story_card_thumbnail}>
+        <img src={storyData?.thumbnail} alt={storyData?.title} />
+      </div>
+    </div>
   );
 };
 

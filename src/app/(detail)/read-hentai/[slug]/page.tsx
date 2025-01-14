@@ -1,8 +1,9 @@
+import DetailPage from "@/pages/detail-page/DetailPage";
 import React from "react";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  return <div>detail page {slug}</div>;
+  return <DetailPage  slug={slug}/>;
 };
 
 export default page;
