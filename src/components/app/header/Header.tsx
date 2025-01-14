@@ -2,12 +2,13 @@
 import React from "react";
 import styles from "./styles.module.scss";
 // import Image from "next/image";
-import { BookMarked, Edit, History, Tag } from "lucide-react";
+import { BellRing, BookMarked, Edit, History, Tag } from "lucide-react";
 import SearchHeader from "@/components/ui/search/search-header";
 import Link from "next/link";
 import { useVerifyUser } from "@/services/queries/useAuth";
 import { useGlobalStore } from "@/stores/state";
 import { Avatar } from "@/components/ui/avatar";
+import { Notifications } from "@/components/ui/notifications";
 const Header = () => {
   const { isLoggedIn } = useGlobalStore();
   const { data: user, isLoading } = useVerifyUser();
@@ -69,6 +70,8 @@ const Header = () => {
               </Link>
             </div>
           )}
+          {/* notifications  */}
+          {isLoggedIn && <Notifications />}
           {/* Profile Avatar */}
           {isLoggedIn && <Avatar userData={user?.data} isShowInfor={true} />}
         </div>

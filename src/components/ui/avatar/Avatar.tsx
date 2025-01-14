@@ -1,76 +1,109 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React from "react";
+import React, { useState, useRef } from "react";
 import styles from "./styles.module.scss";
 import { LogOutIcon, Settings2Icon } from "lucide-react";
 import { useLogoutMutation } from "@/services/queries/useAuth";
 import Link from "next/link";
+import useDetectClickOutside from "@/hooks/useDetectClickOutside";
+
+interface UserData {
+  _id?: string;
+  username: string;
+  readingHistory?: string[];
+  followedStories?: string[];
+  avatar?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 interface AvatarProps {
-  userData?: {
-    _id?: string;
-    username: string;
-    readingHistory?: string[];
-    followedStories?: string[];
-    avatar?: string;
-    createdAt?: string;
-    updatedAt?: string;
-  };
+  userData?: UserData;
   previewImage?: string | null;
-  isShow?: boolean;
   isShowInfor?: boolean;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
-const Avatar = ({
+const Avatar: React.FC<AvatarProps> = ({
   userData,
   previewImage,
   isShowInfor = false,
   size = "md",
-}: AvatarProps) => {
-  const [isShow, setIsShow] = React.useState<boolean>(false);
+}) => {
+  const [isShow, setIsShow] = useState(false);
+
   const handleClickAvatar = () => {
-    if (!isShowInfor) return;
-    setIsShow((prev) => !prev);
+    if (isShowInfor) setIsShow((prev) => !prev);
   };
+
   return (
     <div
       className={`${styles.header_avatar} ${styles[`header_avatar_${size}`]}`}
       onClick={handleClickAvatar}
     >
       <img
-        src={previewImage ? previewImage : userData?.avatar}
-        alt="avatar user"
+        src={previewImage || userData?.avatar || "/default-avatar.png"}
+        alt="User Avatar"
       />
-      {isShowInfor && <AvatarInfor isShow={isShow} userData={userData} />}
+      {isShowInfor && (
+        <AvatarInfor
+          isShow={isShow}
+          userData={userData}
+          setIsShow={setIsShow}
+        />
+      )}
     </div>
   );
 };
 
-const AvatarInfor = ({ isShow, userData }: AvatarProps) => {
+interface AvatarInforProps {
+  isShow: boolean;
+  userData?: UserData;
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AvatarInfor: React.FC<AvatarInforProps> = ({
+  isShow,
+  userData,
+  setIsShow,
+}) => {
   const logoutMutation = useLogoutMutation();
+  const avatarInforRef = useRef<HTMLDivElement | null>(null);
+
   const handleLogout = async () => {
     try {
       await logoutMutation.mutateAsync();
-    } catch (error: any) {
-      console.error(error);
+    } catch (error) {
+      console.error("Logout failed:", error);
     }
   };
+
+  useDetectClickOutside(avatarInforRef, () => {
+    if (isShow) setIsShow(false);
+  });
+
   return (
     <div
+      ref={avatarInforRef}
       className={`${styles.header_avatar_infor} ${
-        isShow && styles.header_avatar_infor_active
+        isShow ? styles.header_avatar_infor_active : ""
       }`}
     >
-      <div className={styles.header_avatar_infor_user}>
+      <div
+        className={styles.header_avatar_infor_user}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.header_avatar_infor_user_avatar}>
-          <img src={userData?.avatar} alt="" />
+          <img
+            src={userData?.avatar || "/default-avatar.png"}
+            alt="User Avatar"
+          />
         </div>
         <p className={styles.header_avatar_infor_user_name}>
           {userData?.username}
         </p>
       </div>
-      <div className={styles.header_avatar_infor_seperate}></div>
+      <div className={styles.header_avatar_infor_separate}></div>
       <Link href="/settings" className={styles.header_avatar_infor_lists_item}>
         <Settings2Icon size={20} color="#000" />
         <p className={styles.header_avatar_infor_lists_item_text}>Settings</p>

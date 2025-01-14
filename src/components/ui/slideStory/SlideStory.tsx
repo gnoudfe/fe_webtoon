@@ -7,7 +7,18 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/autoplay";
-const SlideStory = () => {
+import { PaginationDataType, StoryData } from "@/types/story";
+
+interface SlideStoryProps {
+  highlightStories: {
+    message: string;
+    status: string;
+    data: StoryData[];
+    pagingation: PaginationDataType;
+  };
+}
+
+const SlideStory = ({ highlightStories }: SlideStoryProps) => {
   return (
     <div className={styles.slide_story}>
       <Swiper
@@ -22,9 +33,9 @@ const SlideStory = () => {
         }}
         speed={700}
       >
-        {[...Array(12)].map((_, index) => (
-          <SwiperSlide key={index}>
-            <StoryCard />
+        {highlightStories?.data?.map((story) => (
+          <SwiperSlide key={story._id}>
+            <StoryCard storyData={story} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -6,8 +6,8 @@ import {
   useQuery,
   UseQueryOptions,
 } from "@tanstack/react-query";
-import AuthWebtoonApi from "../apiRequest";
 import { useGlobalStore } from "@/stores/state";
+import { AuthWebtoonApi } from "../apiRequest";
 
 export const useChangePasswordMutation = (
   options?: UseMutationOptions<any, unknown, ChangePassword, unknown>
@@ -69,13 +69,8 @@ export const useLogoutMutation = (options?: UseMutationOptions<any>) => {
 export const useChangeAvatarMutation = () => {
   return useMutation({
     mutationFn: async (body: any) => {
-      console.log("body", body);
       const response = await AuthWebtoonApi.ChangeAvatar({ body: body });
-      if (response.status === "success") {
-        return response;
-      } else {
-        throw new Error(response.message || "Failed to change avatar");
-      }
+      return response;
     },
     mutationKey: ["changeAvatar"],
   });

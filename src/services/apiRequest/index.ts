@@ -72,6 +72,68 @@ class AuthWebtoonApiRequest {
   }
 }
 
-const AuthWebtoonApi = new AuthWebtoonApiRequest();
+class StoryWebtoonApiRequest {
+  public GetAllStories({
+    limit = 15,
+    page = 1,
+  }: {
+    limit?: number | null;
+    page?: number | null;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_ALL_STORIES(limit, page),
+      config: {
+        method: "GET",
+      },
+    });
+  }
 
-export default AuthWebtoonApi;
+  public GetTopStories({
+    limit = 15,
+    page = 1,
+  }: {
+    limit?: number | null;
+    page?: number | null;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_TOP_STORIES(limit, page),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public GetLatestStories({
+    limit = 15,
+    page = 1,
+  }: {
+    limit?: number | null;
+    page?: number | null;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_LATEST_STORIES(limit, page),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+  public GetHighlightStories({
+    limit = 10,
+    page = 1,
+  }: {
+    limit?: number | null;
+    page?: number | null;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_HIGHLIGHT_STORIES(limit, page),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+}
+
+const AuthWebtoonApi = new AuthWebtoonApiRequest();
+const StoryWebtoonApi = new StoryWebtoonApiRequest();
+
+export { AuthWebtoonApi, StoryWebtoonApi };

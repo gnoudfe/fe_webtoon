@@ -53,6 +53,7 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      position: relative;
       &_infor {
         display: flex;
         flex-direction: column;
@@ -161,8 +162,16 @@
   font-size: 14px;
   color: rgb(202, 16, 16);
   font-weight: 500;
-  margin-top: 8px;
   position: absolute;
   left: 5px;
   bottom: -22px;
+}
+
+.error_avatar {
+  font-size: 14px;
+  color: rgb(202, 16, 16);
+  font-weight: 500;
+  position: absolute;
+  left: 5px;
+  bottom: -40px;
 }

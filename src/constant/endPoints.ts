@@ -12,4 +12,14 @@ export const APP_API_ENDPOINT = Object.freeze({
     CHANGE_PASSWORD: "/change-password",
     CHANGE_AVATAR: "/updateAvatar",
   },
+  STORY: {
+    GET_ALL_STORIES: (limit?: number | null, page?: number | null) =>
+      `/stories/all?limit=${limit}&page=${page}`,
+    GET_TOP_STORIES: (limit?: number | null, page?: number | null) =>
+      `/stories/top?limit=${limit}&page=${page}`,
+    GET_HIGHLIGHT_STORIES: (limit?: number | null, page?: number | null) =>
+      `/stories/highlight?limit=${limit}&page=${page}`,
+    GET_LATEST_STORIES: (limit?: number | null, page?: number | null) =>
+      `/stories/latest?limit=${limit}&page=${page}`,
+  },
 });

@@ -19,6 +19,7 @@ const SettingPageSc = () => {
   const [loading, setLoading] = React.useState(false);
   const [response, setResponse] = React.useState("");
   const [previewImage, setPreviewImage] = React.useState<string | null>(null);
+  const [resAvatarMessage, setResAvatarMessage] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
   const changePasswordMutation = useChangePasswordMutation();
   const router = useRouter();
@@ -92,8 +93,12 @@ const SettingPageSc = () => {
     formData.append("avatar", file);
 
     try {
-      await changeAvatarMutation.mutateAsync(formData);
-      alert("Avatar updated successfully!");
+      const response = await changeAvatarMutation.mutateAsync(formData);
+      if (response.status === "success") {
+        alert("Avatar updated successfully!");
+      } else {
+        setResAvatarMessage(response.message);
+      }
     } catch (error) {
       console.error("Error updating avatar:", error);
     }
@@ -106,7 +111,7 @@ const SettingPageSc = () => {
         <div className={styles.setting_page_container_infor}>
           <h1 className={styles.setting_page_container_infor_title}>Account</h1>
           <p className={styles.setting_page_container_infor_description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Update your account settings
           </p>
         </div>
 
@@ -127,9 +132,12 @@ const SettingPageSc = () => {
                     styles.setting_page_container_avatar_infor_description
                   }
                 >
-                  JPEG, PNG and GIF under 2MB
+                  JPEG, PNG, Webp and GIF under 2MB
                 </p>
               </div>
+              {resAvatarMessage && (
+                <span className={styles.error_avatar}>{resAvatarMessage}</span>
+              )}
             </div>
             <label
               htmlFor="upload-avatar"
@@ -162,7 +170,6 @@ const SettingPageSc = () => {
             </button>
           )}
         </div>
-
         <div className={styles.setting_page_lists_container}>
           <h3 className={styles.setting_page_lists_container_title}>
             Your Name
@@ -266,7 +273,7 @@ const SettingPageSc = () => {
         <div className={styles.setting_page_lists_bottom}>
           <div className={styles.setting_page_lists_bottom_text}>
             <h3> Security account</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p> Your account is secure</p>
           </div>
           <button
             className={styles.setting_page_lists_bottom_button}

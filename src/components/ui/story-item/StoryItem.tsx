@@ -1,35 +1,31 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import Image from "next/image";
+import { StoryData } from "@/types/story";
+import Link from "next/link";
 
-const StoryItem = () => {
+interface StoryItemProps {
+  topStory: StoryData;
+}
+
+const StoryItem = ({ topStory }: StoryItemProps) => {
   return (
-    <div className={styles.story_item}>
+    <Link href={`/read-hentai/${topStory.slug}`} className={styles.story_item}>
       <div className={styles.story_item_thumbnail}>
-        {/* <Image
-          src={"https://media.hentai18.net/images/thumbs/stop-smoking.jpg"}
-          alt="thumbnail image"
-          width={80}
-          height={110}
-        /> */}
-        <img src="https://static.vecteezy.com/system/resources/thumbnails/023/192/562/small_2x/sport-car-running-on-the-road-in-future-city-created-with-generative-ai-free-photo.jpg" alt="" />
+        <img src={topStory?.thumbnail} alt={topStory.title} />
       </div>
       <div className={styles.story_item_infor}>
-        <h4 className={styles.story_item_infor_title}>Stop Smoking</h4>
+        <h4 className={styles.story_item_infor_title}>{topStory.title}</h4>
         <div className={styles.story_item_infor_tags}>
-          <div className={styles.story_item_infor_tags_item}>
-            <span className={styles.story_item_infor_tags_item_text}>
-              Manhwa
-            </span>
-          </div>
-          <div className={styles.story_item_infor_tags_item}>
-            <span className={styles.story_item_infor_tags_item_text}>
-              Manhwa
-            </span>
-          </div>
+          {topStory?.tags?.map((tag, index) => (
+            <div className={styles.story_item_infor_tags_item} key={index}>
+              <span className={styles.story_item_infor_tags_item_text}>
+                {tag.name}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
