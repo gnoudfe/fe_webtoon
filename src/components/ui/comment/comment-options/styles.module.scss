@@ -1,0 +1,31 @@
+.comment_section_options {
+  position: absolute;
+  border-radius: 8px;
+  background-color: #000000;
+  bottom: 0;
+  right: 30px;
+  list-style-type: none;
+  width: 120px;
+  animation: fadeIn 0.3s ease;
+  &_item {
+    color: #fff;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    &:first-child {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+    &:last-child {
+      color: rgb(199, 49, 49);
+      border-bottom-right-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    &:hover {
+      background: #080808;
+    }
+  }
+}

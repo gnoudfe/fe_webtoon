@@ -2,46 +2,70 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { TagData } from "@/types/tag";
 import { Bookmark, PointerIcon } from "lucide-react";
-import { DataMockResponse } from "@/mock/tagMock";
-import { storyDataMock } from "@/mock/storyDataMock";
 import StoryCard from "@/components/ui/story-card";
 import Link from "next/link";
-const DetailPageHero = () => {
+import { StoryDetailData } from "@/types/story";
+import { formatTime } from "@/utils/formatTime";
+
+interface DetailPageHeroProps {
+  detailStoryData: StoryDetailData;
+}
+
+const DetailPageHero = ({ detailStoryData }: DetailPageHeroProps) => {
   return (
     <div className={styles.detail_page_hero}>
       <div className={styles.detail_page_hero_overlay}></div>
-      <img
-        src="https://images.pexels.com/photos/4871395/pexels-photo-4871395.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=500&w=2000"
-        alt=""
-      />
+      <img src={detailStoryData?.thumbnail} alt="" />
       <div className={styles.detail_page_hero_content}>
         <div className={styles.detail_page_hero_content_card}>
-          <StoryCard storyData={storyDataMock} type="detail" />
+          <StoryCard storyData={detailStoryData} type="detail" />
         </div>
         <div className={styles.detail_page_hero_content_infor}>
           <h1 className={styles.detail_page_hero_content_infor_title}>
-            Stop Smoking
+            {detailStoryData?.title}
           </h1>
-          <DetailPageItem keyItem="Artists" value="MomoBird" />
           <DetailPageItem
-            keyItem="Tags"
-            value="MomoBird"
-            data={DataMockResponse?.data}
+            keyItem="Artists"
+            value={detailStoryData?.author?.name}
           />
-          <DetailPageItem keyItem="Category" value="Manhwa" />
-          <DetailPageItem keyItem="Status" value="Ongoing" type={2} />
-          <DetailPageItem keyItem="Views" value={50000} type={2} />
-          <DetailPageItem keyItem="Followers" value={1402} type={2} />
-          <DetailPageItem keyItem="Posted" value="3 days ago" type={2} />
-          <DetailPageItem keyItem="Rating" value={4.5} type={2} />
+          <DetailPageItem keyItem="Tags" data={detailStoryData?.tags} />
+          <DetailPageItem
+            keyItem="Category"
+            value={detailStoryData?.category?.name}
+          />
+          <DetailPageItem
+            keyItem="Status"
+            value={detailStoryData?.status}
+            type={2}
+          />
+          <DetailPageItem
+            keyItem="Views"
+            value={detailStoryData?.views}
+            type={2}
+          />
+          <DetailPageItem
+            keyItem="Followers"
+            value={detailStoryData?.followers_count}
+            type={2}
+          />
+          <DetailPageItem
+            keyItem="Posted"
+            value={formatTime(detailStoryData?.createdAt)}
+            type={2}
+          />
+          <DetailPageItem
+            keyItem="Rating"
+            value={detailStoryData?.rating}
+            type={2}
+          />
           <div className={styles.detail_page_hero_content_infor_container}>
             <button
               className={`${styles.detail_page_hero_content_infor_btn} ${styles.detail_page_hero_content_infor_btn_read}`}
             >
               <PointerIcon color="#fff" />
-              <span className={styles.detail_page_hero_content_infor_btn_text}>
+              <Link href={`/read-hentai/${detailStoryData?.slug}/chapter-1`} className={styles.detail_page_hero_content_infor_btn_text}>
                 Read now
-              </span>
+              </Link>
             </button>
             <button className={styles.detail_page_hero_content_infor_btn}>
               <Bookmark color="#fff" />

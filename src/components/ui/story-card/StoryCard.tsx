@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./styles.module.scss";
 import Tag from "../tag";
 import Link from "next/link";
-import { StoryData } from "@/types/story";
+import { StoryDetailData } from "@/types/story";
 import { formatTime } from "@/utils/formatTime";
 
 interface StoryCardProps {
-  storyData: StoryData;
+  storyData: StoryDetailData;
   type?: "normal" | "detail";
 }
 const StoryCard = ({ storyData, type = "normal" }: StoryCardProps) => {

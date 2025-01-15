@@ -30,6 +30,7 @@ class AuthWebtoonApiRequest {
       },
     });
   }
+
   public Logout(): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.AUTH.LOGOUT,
@@ -128,6 +129,94 @@ class StoryWebtoonApiRequest {
       path: APP_API_ENDPOINT.STORY.GET_HIGHLIGHT_STORIES(limit, page),
       config: {
         method: "GET",
+      },
+    });
+  }
+
+  public GetDetailStories({ slug }: { slug: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_STORY_DETAIL(slug),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public GetCommentsStory({ slug }: { slug: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_STORY_COMMENTS(slug),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public GetChapterDetail({
+    slug,
+    slugChapter,
+  }: {
+    slug: string;
+    slugChapter: string;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_CHAPTER_DETAIL(slug, slugChapter),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+  public GetChapterComments({
+    slug,
+    slugChapter,
+  }: {
+    slug: string;
+    slugChapter: string;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_CHAPTER_COMMENTS(slug, slugChapter),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public AddComment({
+    slug,
+    body,
+  }: {
+    slug: string;
+    body: { chapter_id: string; content: string };
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.ADD_COMMENT(slug),
+      config: {
+        method: "POST",
+        body,
+      },
+    });
+  }
+
+  public DeleteComment({ commentId }: { commentId: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.DELETE_COMMENT(commentId),
+      config: {
+        method: "DELETE",
+      },
+    });
+  }
+
+  public EditComment({
+    commentId,
+    body,
+  }: {
+    commentId: string;
+    body: { content: string };
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.EDIT_COMMENT(commentId),
+      config: {
+        method: "PUT",
+        body,
       },
     });
   }

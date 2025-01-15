@@ -1,24 +1,56 @@
 import React from "react";
 import styles from "./styles.module.scss";
-const ListChapters = () => {
+import { ChapterType } from "@/types/chapter";
+import Link from "next/link";
+
+interface ListChaptersProps {
+  chaptersData: ChapterType[];
+  storySlug: string;
+}
+
+const ListChapters = ({ chaptersData = [], storySlug }: ListChaptersProps) => {
   return (
     <div className={styles.list_chapters}>
       <h4 className={styles.list_chapters_title}>Chapter title of story</h4>
       <div className={styles.list_chapters_grid}>
-        {[...Array(40)].map((_, index) => (
-          <ChapterItem key={index} />
+        {chaptersData?.map((chapter) => (
+          <ChapterItem
+            key={chapter.slug}
+            title={chapter?.title}
+            time={chapter?.time}
+            id={chapter?._id}
+            slug={chapter?.slug}
+            storySlug={storySlug}
+          />
         ))}
       </div>
     </div>
   );
 };
 
-const ChapterItem = () => {
+interface ChapterItemProps {
+  title: string;
+  time: string;
+  id: string;
+  slug: string;
+  storySlug: string;
+}
+
+const ChapterItem = ({
+  title,
+  time,
+  id,
+  slug,
+  storySlug,
+}: ChapterItemProps) => {
   return (
-    <div className={styles.chapter_item}>
-      <h5 className={styles.chapter_item_title}>Chapter 11</h5>
-      <p className={styles.chapter_item_date}>January 14, 2025</p>
-    </div>
+    <Link
+      href={`/read-hentai/${storySlug}/${slug}`}
+      className={styles.chapter_item}
+    >
+      <h5 className={styles.chapter_item_title}>{title}</h5>
+      <p className={styles.chapter_item_date}>{time}</p>
+    </Link>
   );
 };
 

@@ -19,7 +19,7 @@ const LoginForm = () => {
     username?: string;
     password?: string;
   }>({});
-  const { setIsLoggedIn } = useGlobalStore();
+  const { setIsLoggedIn, setUserData } = useGlobalStore();
   const { refetch } = useVerifyUser();
   const loginMutation = useLoginMutation();
   const router = useRouter();
@@ -44,6 +44,7 @@ const LoginForm = () => {
         });
         if (response.status === HttpStatusCode.Ok) {
           setIsLoggedIn(true);
+          setUserData(response.data);
           refetch();
           router.push("/");
         } else {

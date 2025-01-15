@@ -21,5 +21,14 @@ export const APP_API_ENDPOINT = Object.freeze({
       `/stories/highlight?limit=${limit}&page=${page}`,
     GET_LATEST_STORIES: (limit?: number | null, page?: number | null) =>
       `/stories/latest?limit=${limit}&page=${page}`,
+    GET_STORY_DETAIL: (slug: string) => `/stories/${slug}`,
+    GET_STORY_COMMENTS: (slug: string) => `/stories/${slug}/comments`,
+    GET_CHAPTER_DETAIL: (slug: string, slugChapter: string) =>
+      `/stories/${slug}/chapter/${slugChapter}`,
+    GET_CHAPTER_COMMENTS: (slug: string, slugChapter: string) =>
+      `/stories/${slug}/comments/${slugChapter}`,
+    ADD_COMMENT: (slug: string) => `/stories/${slug}/comments`,
+    DELETE_COMMENT: (commentId: string) => `/comments/delete/${commentId}`,
+    EDIT_COMMENT: (commentId: string) => `/comments/update/${commentId}`,
   },
 });

@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
 // import Image from "next/image";
-import { BellRing, BookMarked, Edit, History, Tag } from "lucide-react";
+import { BookMarked, Edit, History, Tag } from "lucide-react";
 import SearchHeader from "@/components/ui/search/search-header";
 import Link from "next/link";
 import { useVerifyUser } from "@/services/queries/useAuth";

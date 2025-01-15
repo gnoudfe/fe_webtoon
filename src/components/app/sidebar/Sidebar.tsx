@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import StoryItem from "@/components/ui/story-item/StoryItem";
-import { PaginationDataType, StoryData } from "@/types/story";
+import { PaginationDataType, StoryDetailData } from "@/types/story";
 
 interface SidebarProps {
   topStoriesData: {
     message: string;
     status: string;
-    data: StoryData[];
+    data: StoryDetailData[];
     pagination: PaginationDataType;
   };
 }

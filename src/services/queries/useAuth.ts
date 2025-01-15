@@ -41,7 +41,7 @@ export const useRegisterMutation = (
 export const useVerifyUser = (
   options?: Omit<UseQueryOptions<any>, "queryKey" | "queryFn">
 ) => {
-  const { setIsLoggedIn } = useGlobalStore();
+  const { setIsLoggedIn , setUserData } = useGlobalStore();
 
   return useQuery({
     ...options,
@@ -50,6 +50,7 @@ export const useVerifyUser = (
       const response = await AuthWebtoonApi.VerifyUser();
       if (response.status === "success") {
         setIsLoggedIn(true);
+        setUserData(response.data);
       }
       return response;
     },

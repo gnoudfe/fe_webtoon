@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import { StoryData } from "@/types/story";
 import Link from "next/link";
+import { StoryDetailData } from "@/types/story";
 
 interface StoryItemProps {
-  topStory: StoryData;
+  topStory: StoryDetailData;
 }
 
 const StoryItem = ({ topStory }: StoryItemProps) => {
