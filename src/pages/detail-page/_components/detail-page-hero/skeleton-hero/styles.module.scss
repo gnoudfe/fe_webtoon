@@ -1,0 +1,16 @@
+@use "@/styles/animation.scss";
+
+.hero_skeleton {
+  width: 100%;
+  position: relative;
+  height: 600px;
+  background-color: #3a3939;
+  animation: skeleton 3s infinite ease-in-out;
+  background-image: linear-gradient(
+    90deg,
+    #343434 24.18%,
+    #333232 50.26%,
+    #2e2e2e 114.84%
+  );
+  background-size: 200% 100%;
+}

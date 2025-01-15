@@ -1,26 +1,33 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import { ChapterType } from "@/types/chapter";
 import Link from "next/link";
+import { StoryDetailResponseData } from "@/types/story";
+import { StoryWebtoonApi } from "@/services/apiRequest";
 
 interface ListChaptersProps {
-  chaptersData: ChapterType[];
-  storySlug: string;
+  slug: string;
+}
+async function getDetailStories(slug: string) {
+  const response: StoryDetailResponseData =
+    await StoryWebtoonApi.GetDetailStories({ slug });
+  return response;
 }
 
-const ListChapters = ({ chaptersData = [], storySlug }: ListChaptersProps) => {
+const ListChapters = async ({ slug }: ListChaptersProps) => {
+  const detailStories = await getDetailStories(slug);
+
   return (
     <div className={styles.list_chapters}>
       <h4 className={styles.list_chapters_title}>Chapter title of story</h4>
       <div className={styles.list_chapters_grid}>
-        {chaptersData?.map((chapter) => (
+        {detailStories?.data?.chapters?.map((chapter) => (
           <ChapterItem
             key={chapter.slug}
             title={chapter?.title}
             time={chapter?.time}
             id={chapter?._id}
             slug={chapter?.slug}
-            storySlug={storySlug}
+            storySlug={chapter?.slug}
           />
         ))}
       </div>
@@ -36,13 +43,7 @@ interface ChapterItemProps {
   storySlug: string;
 }
 
-const ChapterItem = ({
-  title,
-  time,
-  id,
-  slug,
-  storySlug,
-}: ChapterItemProps) => {
+const ChapterItem = ({ title, time, slug, storySlug }: ChapterItemProps) => {
   return (
     <Link
       href={`/read-hentai/${storySlug}/${slug}`}

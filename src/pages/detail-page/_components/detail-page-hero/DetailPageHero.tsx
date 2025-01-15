@@ -4,58 +4,62 @@ import { TagData } from "@/types/tag";
 import { Bookmark, PointerIcon } from "lucide-react";
 import StoryCard from "@/components/ui/story-card";
 import Link from "next/link";
-import { StoryDetailData } from "@/types/story";
 import { formatTime } from "@/utils/formatTime";
-
-interface DetailPageHeroProps {
-  detailStoryData: StoryDetailData;
+import { StoryDetailResponseData } from "@/types/story";
+import { StoryWebtoonApi } from "@/services/apiRequest";
+async function getDetailStories(slug: string) {
+  const response: StoryDetailResponseData =
+    await StoryWebtoonApi.GetDetailStories({ slug });
+  return response;
 }
 
-const DetailPageHero = ({ detailStoryData }: DetailPageHeroProps) => {
+const DetailPageHero = async ({ slug }: { slug: string }) => {
+  const detailStoryData = await getDetailStories(slug);
+
   return (
     <div className={styles.detail_page_hero}>
       <div className={styles.detail_page_hero_overlay}></div>
-      <img src={detailStoryData?.thumbnail} alt="" />
+      <img src={detailStoryData?.data.thumbnail} alt="" />
       <div className={styles.detail_page_hero_content}>
         <div className={styles.detail_page_hero_content_card}>
-          <StoryCard storyData={detailStoryData} type="detail" />
+          <StoryCard storyData={detailStoryData?.data || {}} type="detail" />
         </div>
         <div className={styles.detail_page_hero_content_infor}>
           <h1 className={styles.detail_page_hero_content_infor_title}>
-            {detailStoryData?.title}
+            {detailStoryData?.data.title}
           </h1>
           <DetailPageItem
             keyItem="Artists"
-            value={detailStoryData?.author?.name}
+            value={detailStoryData?.data.author?.name}
           />
-          <DetailPageItem keyItem="Tags" data={detailStoryData?.tags} />
+          <DetailPageItem keyItem="Tags" data={detailStoryData?.data.tags} />
           <DetailPageItem
             keyItem="Category"
-            value={detailStoryData?.category?.name}
+            value={detailStoryData?.data.category?.name}
           />
           <DetailPageItem
             keyItem="Status"
-            value={detailStoryData?.status}
+            value={detailStoryData?.data.status}
             type={2}
           />
           <DetailPageItem
             keyItem="Views"
-            value={detailStoryData?.views}
+            value={detailStoryData?.data.views}
             type={2}
           />
           <DetailPageItem
             keyItem="Followers"
-            value={detailStoryData?.followers_count}
+            value={detailStoryData?.data.followers_count}
             type={2}
           />
           <DetailPageItem
             keyItem="Posted"
-            value={formatTime(detailStoryData?.createdAt)}
+            value={formatTime(detailStoryData?.data.createdAt)}
             type={2}
           />
           <DetailPageItem
             keyItem="Rating"
-            value={detailStoryData?.rating}
+            value={detailStoryData?.data.rating}
             type={2}
           />
           <div className={styles.detail_page_hero_content_infor_container}>
@@ -63,7 +67,10 @@ const DetailPageHero = ({ detailStoryData }: DetailPageHeroProps) => {
               className={`${styles.detail_page_hero_content_infor_btn} ${styles.detail_page_hero_content_infor_btn_read}`}
             >
               <PointerIcon color="#fff" />
-              <Link href={`/read-hentai/${detailStoryData?.slug}/chapter-1`} className={styles.detail_page_hero_content_infor_btn_text}>
+              <Link
+                href={`/read-hentai/${detailStoryData?.data.slug}/chapter-1`}
+                className={styles.detail_page_hero_content_infor_btn_text}
+              >
                 Read now
               </Link>
             </button>

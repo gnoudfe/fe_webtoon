@@ -18,14 +18,10 @@ export class ApiClient {
     return this.prefix ? `${this.host}/${this.prefix}` : this.host;
   }
 
-  private isClient(): boolean {
-    return typeof window !== "undefined";
-  }
-
   private getHeaders(config: CustomFetchConfig): Record<string, string> {
     const headers = { ...this.headers };
 
-    const token = this.isClient() ? "" : config.token;
+    const token = config.token;
 
     if (token) {
       headers.Authorization = token;

@@ -18,19 +18,13 @@ async function getHighlightStories() {
   return response;
 }
 
-async function getTopStories() {
-  const response = await StoryWebtoonApi.GetTopStories({});
-  return response;
-}
-
 const HomePage = async () => {
   const latestStories: StoryResponseData = await getLatestStories();
   const highlightStories: StoryResponseData = await getHighlightStories();
-  const topStories: StoryResponseData = await getTopStories();
   return (
     <div className={styles.home_page}>
       <div className={styles.home_page_sidebar}>
-        <Sidebar topStoriesData={topStories} />
+        <Sidebar />
       </div>
       <div className={styles.home_page_container}>
         <section className={styles.home_page_section}>

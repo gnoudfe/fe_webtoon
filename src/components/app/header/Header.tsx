@@ -12,9 +12,7 @@ import { Notifications } from "@/components/ui/notifications";
 const Header = () => {
   const { isLoggedIn } = useGlobalStore();
   const { data: user, isLoading } = useVerifyUser();
-  if (isLoading) {
-    return null;
-  }
+
   return (
     <>
       <div className={styles.header}>
@@ -71,9 +69,11 @@ const Header = () => {
             </div>
           )}
           {/* notifications  */}
-          {isLoggedIn && <Notifications />}
+          {isLoggedIn && !isLoading && <Notifications />}
           {/* Profile Avatar */}
-          {isLoggedIn && <Avatar userData={user?.data} isShowInfor={true} />}
+          {isLoggedIn && !isLoading && (
+            <Avatar userData={user?.data} isShowInfor={true} />
+          )}
         </div>
       </div>
       <div className={styles.header_under}>

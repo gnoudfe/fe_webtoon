@@ -1,0 +1,14 @@
+@use "@/styles/animation.scss";
+.summaty_skeleton {
+  height: 150px;
+  width: 100%;
+  border-radius: 8px;
+  animation: skeleton 3s infinite ease-in-out;
+  background-image: linear-gradient(
+    90deg,
+    #343434 24.18%,
+    #333232 50.26%,
+    #2e2e2e 114.84%
+  );
+  background-size: 200% 100%;
+}
