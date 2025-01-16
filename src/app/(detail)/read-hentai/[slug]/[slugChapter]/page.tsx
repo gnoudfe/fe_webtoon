@@ -7,7 +7,12 @@ const page = async ({
   params: Promise<{ slug: string; slugChapter: string }>;
 }) => {
   const { slug, slugChapter } = await params;
-  return <DetailChapter slug={slug} slugChapter={slugChapter} />;
+
+  return (
+    <>
+      <DetailChapter slug={slug} slugChapter={slugChapter} /> ;
+    </>
+  );
 };
 
 export default page;

@@ -15,11 +15,13 @@
   &_nav {
     display: flex;
     gap: 4px;
-    color: #fff;
     text-align: center;
     font-size: 22px;
+    color: #fff;
+
     &_text {
       text-transform: capitalize;
+      color: #fff;
     }
   }
 }

@@ -3,8 +3,8 @@ import styles from "./styles.module.scss";
 import { StoryWebtoonApi } from "@/services/apiRequest";
 import { ChapterResponseData } from "@/types/chapter";
 import { DetailChapterInfor } from "./chapter-infor/DetailChapterInfor";
-import { CommentResponse } from "@/types/comment";
 import { CommentSection } from "@/components/ui/comment";
+import ScrollToTop from "@/components/ui/scrollToTop";
 
 interface DetailChapterProps {
   slug: string;
@@ -25,23 +25,8 @@ async function getChapterDetail({
   return response;
 }
 
-async function getChapterComments({
-  slug,
-  slugChapter,
-}: {
-  slug: string;
-  slugChapter: string;
-}) {
-  const response: CommentResponse = await StoryWebtoonApi.GetChapterComments({
-    slug,
-    slugChapter,
-  });
-  return response;
-}
-
 const DetailChapter = async ({ slug, slugChapter }: DetailChapterProps) => {
   const chapterDetailData = await getChapterDetail({ slug, slugChapter });
-  const chapterComments = await getChapterComments({ slug, slugChapter });
   return (
     <div className={styles.detail_chapter}>
       <DetailChapterInfor type={2} chapterDetailData={chapterDetailData} />
@@ -56,10 +41,11 @@ const DetailChapter = async ({ slug, slugChapter }: DetailChapterProps) => {
         <CommentSection
           chapterId={chapterDetailData?.data?.currentChapter?._id}
           storySlug={chapterDetailData?.data?.currentChapter?.story_id?.slug}
-          commentsData={chapterComments?.data}
           isAddComment={true}
+          slugChapter={slugChapter}
         />
       </div>
+      <ScrollToTop />
     </div>
   );
 };

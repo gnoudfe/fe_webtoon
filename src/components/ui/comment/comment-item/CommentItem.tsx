@@ -18,6 +18,7 @@ interface CommentItemProps {
   handleEditComment?: (commentId: string) => void;
   setEditComment?: React.Dispatch<React.SetStateAction<string>>;
   editComment?: string;
+  editCommentLoading?: boolean;
 }
 
 const CommentItem = ({
@@ -30,6 +31,7 @@ const CommentItem = ({
   handleEditComment,
   setEditComment,
   editComment,
+  editCommentLoading,
 }: CommentItemProps) => {
   const { userData } = useGlobalStore();
   const handleActionMessage = (commentId: string) => {
@@ -72,7 +74,7 @@ const CommentItem = ({
               className={styles.comment_section_owner_btn}
               onClick={() => handleEditComment?.(commentsDataItem._id)}
             >
-              Save
+              {editCommentLoading ? "Saving..." : "Save"}
             </button>
           </>
         ) : (
@@ -108,6 +110,8 @@ const CommentItem = ({
               setIsEditComment={setIsEditComment}
               setActiveCommentId={setActiveCommentId}
               activeCommentId={activeCommentId}
+              contentEditValue={commentsDataItem?.content}
+              setEditComment={setEditComment}
             />
           )}
         </div>

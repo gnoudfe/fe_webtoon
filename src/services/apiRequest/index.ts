@@ -88,7 +88,29 @@ class StoryWebtoonApiRequest {
       },
     });
   }
+  public GetStoriesByType({
+    slug,
+    type,
+    limit = 15,
+    page = 1,
+  }: {
+    slug: string;
+    type: "tag" | "category";
+    limit?: number | null;
+    page?: number | null;
+  }): Promise<any> {
+    const endpoint =
+      type === "tag"
+        ? APP_API_ENDPOINT.STORY.GET_STORY_BY_TAG(slug, page, limit)
+        : APP_API_ENDPOINT.STORY.GET_STORY_BY_CATEGORY(slug, page, limit);
 
+    return apiBaseServiceInstance.Http({
+      path: endpoint,
+      config: {
+        method: "GET",
+      },
+    });
+  }
   public GetTopStories({
     limit = 15,
     page = 1,
@@ -142,15 +164,6 @@ class StoryWebtoonApiRequest {
     });
   }
 
-  public GetCommentsStory({ slug }: { slug: string }): Promise<any> {
-    return apiBaseServiceInstance.Http({
-      path: APP_API_ENDPOINT.STORY.GET_STORY_COMMENTS(slug),
-      config: {
-        method: "GET",
-      },
-    });
-  }
-
   public GetChapterDetail({
     slug,
     slugChapter,
@@ -165,15 +178,41 @@ class StoryWebtoonApiRequest {
       },
     });
   }
+
+  public GetCommentsStory({
+    slug,
+    page = 1,
+    limit = 10,
+  }: {
+    slug: string;
+    page?: number;
+    limit?: number;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_STORY_COMMENTS(slug, page, limit),
+      config: {
+        method: "GET",
+      },
+    });
+  }
   public GetChapterComments({
     slug,
     slugChapter,
+    page = 1,
+    limit = 8,
   }: {
     slug: string;
     slugChapter: string;
+    page?: number;
+    limit?: number;
   }): Promise<any> {
     return apiBaseServiceInstance.Http({
-      path: APP_API_ENDPOINT.STORY.GET_CHAPTER_COMMENTS(slug, slugChapter),
+      path: APP_API_ENDPOINT.STORY.GET_CHAPTER_COMMENTS(
+        slug,
+        slugChapter,
+        page,
+        limit
+      ),
       config: {
         method: "GET",
       },

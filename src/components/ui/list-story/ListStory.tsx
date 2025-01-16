@@ -2,16 +2,19 @@ import React from "react";
 import styles from "./styles.module.scss";
 import StoryCard from "../story-card";
 import { StoryResponseData } from "@/types/story";
+import { StoryWebtoonApi } from "@/services/apiRequest";
 
-interface ListStoryProps {
-  type?: string;
-  latestStoriesData: StoryResponseData;
+async function getLatestStories() {
+  const response = await StoryWebtoonApi.GetLatestStories({});
+  return response;
 }
 
-const ListStory = ({ latestStoriesData, type = "normal" }: ListStoryProps) => {
+const ListStory = async () => {
+  const latestStories: StoryResponseData = await getLatestStories();
+
   return (
-    <div className={`${styles.list_story} ${styles[`list_story_${type}`]}`}>
-      {latestStoriesData.data.map((story) => (
+    <div className={`${styles.list_story}`}>
+      {latestStories?.data.map((story) => (
         <StoryCard key={story._id} storyData={story} />
       ))}
     </div>

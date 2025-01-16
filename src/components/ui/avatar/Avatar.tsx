@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useRef } from "react";
 import styles from "./styles.module.scss";
-import { LogOutIcon, Settings2Icon } from "lucide-react";
+import { ArchiveIcon, HistoryIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import { useLogoutMutation } from "@/services/queries/useAuth";
 import Link from "next/link";
 import useDetectClickOutside from "@/hooks/useDetectClickOutside";
@@ -69,7 +69,6 @@ const AvatarInfor: React.FC<AvatarInforProps> = ({
 }) => {
   const logoutMutation = useLogoutMutation();
   const avatarInforRef = useRef<HTMLDivElement | null>(null);
-
   const handleLogout = async () => {
     try {
       await logoutMutation.mutateAsync();
@@ -107,6 +106,18 @@ const AvatarInfor: React.FC<AvatarInforProps> = ({
       <Link href="/settings" className={styles.header_avatar_infor_lists_item}>
         <Settings2Icon size={20} color="#000" />
         <p className={styles.header_avatar_infor_lists_item_text}>Settings</p>
+      </Link>
+      <Link href="/settings" className={styles.header_avatar_infor_lists_item}>
+        <ArchiveIcon size={20} color="#000" />
+        <p className={styles.header_avatar_infor_lists_item_text}>
+          My Follow Stories
+        </p>
+      </Link>
+      <Link href="/settings" className={styles.header_avatar_infor_lists_item}>
+        <HistoryIcon size={20} color="#000" />
+        <p className={styles.header_avatar_infor_lists_item_text}>
+          My History
+        </p>
       </Link>
       <div
         className={styles.header_avatar_infor_lists_item}

@@ -5,6 +5,16 @@
   overflow: hidden;
   width: 100%;
   padding-top: 80px;
+  &_home {
+    width: 42px;
+    height: 42px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+  }
   &_container {
     max-width: 800px;
     width: 100%;

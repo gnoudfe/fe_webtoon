@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { StoryWebtoonApi } from "../apiRequest";
 
 export const useAddCommentMutatation = () => {
@@ -46,5 +46,32 @@ export const useEditCommentMutation = () => {
       }
     },
     mutationKey: ["editComment"],
+  });
+};
+
+export const useGetStoriesByType = ({
+  slug,
+  type,
+}: {
+  slug: string;
+  type: "tag" | "category";
+}) => {
+  return useInfiniteQuery({
+    queryKey: ["getStoriesByType", slug, type],
+    queryFn: async ({ pageParam }) => {
+      const response = await StoryWebtoonApi.GetStoriesByType({
+        slug,
+        type,
+        page: pageParam,
+      });
+      if (response) {
+        return response;
+      }
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.pagination;
+      return currentPage < totalPages ? currentPage + 1 : null;
+    },
   });
 };

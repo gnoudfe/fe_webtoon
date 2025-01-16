@@ -10,24 +10,36 @@ import {
 } from "@/services/queries/useStory";
 import { Avatar } from "../../avatar";
 import CommentItem from "../comment-item";
+import Pagination from "../../pagination";
+import { StoryWebtoonApi } from "@/services/apiRequest";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import CommentSkeleton from "../comment-skeleton";
 
 interface CommentDataProps {
-  commentsData: CommentsData[];
   chapterId?: string;
   storySlug?: string;
   isAddComment: boolean;
+  slugChapter?: string;
 }
 
 const CommentSection = ({
-  commentsData,
   chapterId,
   storySlug,
+  slugChapter,
   isAddComment,
 }: CommentDataProps) => {
   const [comment, setComment] = React.useState<string>("");
   const [editComment, setEditComment] = React.useState<string>("");
   const { isLoggedIn, userData } = useGlobalStore();
-
+  const [pagination, setPagination] = React.useState({
+    currentPage: 1,
+    totalPages: 1,
+    totalComments: 1,
+  });
   const [activeCommentId, setActiveCommentId] = React.useState<string | null>(
     null
   );
@@ -35,10 +47,49 @@ const CommentSection = ({
   const addCommentMutation = useAddCommentMutatation();
   const deleteCommentMutation = useDeleteCommentMutatation();
   const editCommentMutation = useEditCommentMutation();
-  const [commentsDataList, setCommentsDataList] =
-    React.useState<CommentsData[]>(commentsData);
+  const queryClient = useQueryClient();
 
-  const handleAddComment = async () => {
+  const fetchComments = async (page: number) => {
+    try {
+      let response;
+
+      if (!isAddComment) {
+        response = await StoryWebtoonApi.GetCommentsStory({
+          slug: storySlug || "",
+          page: page,
+        });
+      } else {
+        response = await StoryWebtoonApi.GetChapterComments({
+          slug: storySlug || "",
+          slugChapter: slugChapter || "",
+          page: page,
+        });
+      }
+
+      if (response && response.status === "success") {
+        setPagination({
+          currentPage: page,
+          totalPages: response?.pagination?.totalPages || 0,
+          totalComments: response?.pagination?.totalComments || 0,
+        });
+      }
+
+      return response;
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
+  const { data: commentsDataList, isPending } = useQuery({
+    queryKey: ["comments", pagination.currentPage, storySlug, slugChapter],
+    queryFn: () => fetchComments(pagination.currentPage),
+    placeholderData: keepPreviousData,
+    staleTime: 0,
+    refetchInterval: 60000,
+    refetchOnWindowFocus: true,
+  });
+
+  const handleAddComment = async (e: React.FormEvent) => {
+    e.preventDefault();
     try {
       const response = await addCommentMutation.mutateAsync({
         slug: storySlug || "",
@@ -48,8 +99,15 @@ const CommentSection = ({
         },
       });
       if (response && response.status === "success") {
+        queryClient.invalidateQueries({
+          queryKey: [
+            "comments",
+            pagination.currentPage,
+            storySlug,
+            slugChapter,
+          ],
+        });
         setComment("");
-        setCommentsDataList([response.data, ...commentsDataList]);
       }
     } catch (error) {
       console.log(error);
@@ -62,10 +120,14 @@ const CommentSection = ({
         commentId,
       });
       if (response && response.status === "success") {
-        console.log("response", response);
-        setCommentsDataList(
-          commentsDataList.filter((comment) => comment._id !== commentId)
-        );
+        queryClient.invalidateQueries({
+          queryKey: [
+            "comments",
+            pagination.currentPage,
+            storySlug,
+            slugChapter,
+          ],
+        });
       }
     } catch (error) {
       console.log(error);
@@ -81,65 +143,90 @@ const CommentSection = ({
         },
       });
       if (response && response.status === "success") {
-        setCommentsDataList((prev) =>
-          prev.map((comment) =>
-            comment._id === commentId
-              ? {
-                  ...comment,
-                  content: editComment,
-                  updatedAt: new Date().toISOString(),
-                }
-              : comment
-          )
-        );
+        queryClient.invalidateQueries({
+          queryKey: [
+            "comments",
+            pagination.currentPage,
+            storySlug,
+            slugChapter,
+          ],
+        });
         setIsEditComment(null);
-        setComment("");
+        setEditComment("");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handlePageChange = (page: number) => {
+    setPagination((prev) => ({ ...prev, currentPage: page }));
+  };
+
   return (
     <div className={styles.comment_section}>
-      <h4
-        className={styles.comment_section_title}
-      >{`${commentsDataList?.length} Comments`}</h4>
-      {isLoggedIn && isAddComment && (
-        <div className={styles.comment_section_owner}>
-          <Avatar userData={userData} size="lg" />
-          <input
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Write a comment"
-            className={styles.comment_section_owner_input}
-          />
-          <button className={styles.comment_section_owner_cancel_btn}>
-            Cancel
-          </button>
-          <button
-            className={styles.comment_section_owner_btn}
-            onClick={handleAddComment}
-          >
-            Comment
-          </button>
-        </div>
+      {isPending ? (
+        <CommentSkeleton />
+      ) : (
+        <>
+          <h4
+            className={styles.comment_section_title}
+          >{`${pagination?.totalComments} Comments`}</h4>
+          {isLoggedIn && isAddComment && pagination.currentPage === 1 && (
+            <div className={styles.comment_section_owner}>
+              <Avatar userData={userData} size="lg" />
+              <form
+                className={styles.comment_section_owner}
+                onSubmit={(e) => handleAddComment(e)}
+              >
+                <input
+                  type="text"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Write a comment"
+                  className={styles.comment_section_owner_input}
+                />
+                <button
+                  className={styles.comment_section_owner_cancel_btn}
+                  onClick={() => setComment("")}
+                >
+                  Cancel
+                </button>
+                <button className={styles.comment_section_owner_btn}>
+                  {addCommentMutation.isPending ? "Loading..." : "Comment"}
+                </button>
+              </form>
+            </div>
+          )}
+          {commentsDataList?.data?.length === 0 && (
+            <p className={styles.comment_section_no_comment}>
+              No comments yet. Be the first to comment
+            </p>
+          )}
+          {commentsDataList?.data?.map((commentItem: CommentsData) => (
+            <CommentItem
+              key={commentItem._id}
+              commentsDataItem={commentItem}
+              activeCommentId={activeCommentId}
+              setActiveCommentId={setActiveCommentId}
+              isEditComment={isEditComment}
+              setIsEditComment={setIsEditComment}
+              handleDeleteComment={handleDeleteComment}
+              handleEditComment={handleEditComment}
+              setEditComment={setEditComment}
+              editComment={editComment}
+              editCommentLoading={editCommentMutation?.isPending}
+            />
+          ))}
+          {pagination.totalPages > 1 && (
+            <Pagination
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
       )}
-      {commentsDataList?.map((comment) => (
-        <CommentItem
-          key={comment._id}
-          commentsDataItem={comment}
-          activeCommentId={activeCommentId}
-          setActiveCommentId={setActiveCommentId}
-          isEditComment={isEditComment}
-          setIsEditComment={setIsEditComment}
-          handleDeleteComment={handleDeleteComment}
-          handleEditComment={handleEditComment}
-          setEditComment={setEditComment}
-          editComment={editComment}
-        />
-      ))}
     </div>
   );
 };

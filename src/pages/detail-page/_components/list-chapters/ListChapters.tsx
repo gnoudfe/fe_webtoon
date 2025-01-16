@@ -27,7 +27,7 @@ const ListChapters = async ({ slug }: ListChaptersProps) => {
             time={chapter?.time}
             id={chapter?._id}
             slug={chapter?.slug}
-            storySlug={chapter?.slug}
+            storySlug={detailStories?.data?.slug}
           />
         ))}
       </div>

@@ -1,0 +1,17 @@
+.scroll_to_top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #000;
+  transition: opacity 0.3s ease;
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  &:hover {
+    opacity: 0.7;
+  }
+}

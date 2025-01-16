@@ -1,22 +1,20 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import ListStory from "@/components/ui/list-story";
-import { mockData } from "@/mock/storyDataMock";
+import ListStoryCategory from "@/components/ui/list-story/list-story-category";
+
 interface CategoryPageProps {
   slug: string;
+  type: "tag" | "category";
 }
 
-const CategoryPage = ({ slug }: CategoryPageProps) => {
+const CategoryPage = ({ slug, type }: CategoryPageProps) => {
   return (
     <div className={styles.category_page}>
       <div className={styles.category_page_infor}>
-        <h1 className={styles.category_page_infor_title}>{slug} </h1>
-        <p className={styles.category_page_infor_description}>
-          Adventure genre, adventure, often about the journey of the characters
-        </p>
+        <h1 className={styles.category_page_infor_title}>{slug}</h1>
       </div>
       <div className={styles.category_page_lists}>
-        <ListStory latestStoriesData={mockData} type="category" />
+        <ListStoryCategory slug={slug} type={type} />
       </div>
     </div>
   );

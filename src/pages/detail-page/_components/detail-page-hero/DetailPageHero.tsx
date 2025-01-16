@@ -31,11 +31,13 @@ const DetailPageHero = async ({ slug }: { slug: string }) => {
           <DetailPageItem
             keyItem="Artists"
             value={detailStoryData?.data.author?.name}
+            slug={detailStoryData?.data?.author?.slug}
           />
           <DetailPageItem keyItem="Tags" data={detailStoryData?.data.tags} />
           <DetailPageItem
             keyItem="Category"
             value={detailStoryData?.data.category?.name}
+            slug={detailStoryData?.data.category?.slug}
           />
           <DetailPageItem
             keyItem="Status"
@@ -90,6 +92,7 @@ const DetailPageHero = async ({ slug }: { slug: string }) => {
 interface DetailPageItemProps {
   keyItem: string;
   value?: string | number;
+  slug?: string;
   data?: TagData[];
   type?: number;
 }
@@ -99,6 +102,7 @@ const DetailPageItem = ({
   value,
   data = [],
   type = 1,
+  slug,
 }: DetailPageItemProps) => {
   return (
     <div className={styles.detail_page_hero_content_infor_item}>
@@ -118,7 +122,9 @@ const DetailPageItem = ({
           ))
         ) : (
           <Link
-            href={`${keyItem === "Artists" ? `/artist/${value}` : `/${value}`}`}
+            href={`${
+              keyItem === "Artists" ? `/artist/${slug}` : `/category/${slug}`
+            }`}
             className={styles.detail_page_hero_content_infor_item_value}
           >
             {value}

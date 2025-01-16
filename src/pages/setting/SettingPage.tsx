@@ -9,13 +9,16 @@ import {
   useLogoutMutation,
   useVerifyUser,
 } from "@/services/queries/useAuth";
-import { LogOutIcon, SaveAll } from "lucide-react";
+import { HomeIcon, LogOutIcon, SaveAll } from "lucide-react";
 import InputField from "@/components/ui/input";
 import { validateForm } from "@/utils/validateForm";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
 const SettingPageSc = () => {
   const [password, setPassword] = React.useState("");
   const [newPassword, SetNewPassword] = React.useState("");
+  const [isAvatarSaved, setIsAvatarSaved] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [response, setResponse] = React.useState("");
   const [previewImage, setPreviewImage] = React.useState<string | null>(null);
@@ -28,6 +31,7 @@ const SettingPageSc = () => {
     newPassword?: string;
   }>({});
   const { data: user, isLoading } = useVerifyUser();
+  const queryClient = useQueryClient();
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
@@ -81,6 +85,7 @@ const SettingPageSc = () => {
     if (file) {
       setFile(file);
       setPreviewImage(URL.createObjectURL(file));
+      setIsAvatarSaved(false);
     }
   };
 
@@ -89,13 +94,14 @@ const SettingPageSc = () => {
   const handleChangeAvatar = async () => {
     if (!file) return;
     const formData = new FormData();
-
     formData.append("avatar", file);
 
     try {
       const response = await changeAvatarMutation.mutateAsync(formData);
       if (response.status === "success") {
         alert("Avatar updated successfully!");
+        setIsAvatarSaved(true);
+        queryClient.invalidateQueries({ queryKey: ["verifyUser"] });
       } else {
         setResAvatarMessage(response.message);
       }
@@ -108,6 +114,9 @@ const SettingPageSc = () => {
   return (
     <div className={styles.setting_page}>
       <div className={styles.setting_page_container}>
+        <Link href={"/"} className={styles.setting_page_home}>
+          <HomeIcon color="#fff" />
+        </Link>
         <div className={styles.setting_page_container_infor}>
           <h1 className={styles.setting_page_container_infor_title}>Account</h1>
           <p className={styles.setting_page_container_infor_description}>
@@ -152,7 +161,7 @@ const SettingPageSc = () => {
               />
             </label>
           </div>
-          {previewImage && (
+          {previewImage && !isAvatarSaved && (
             <button
               className={`${styles.setting_page_lists_button}`}
               onClick={handleChangeAvatar}

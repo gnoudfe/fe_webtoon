@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
 // import Image from "next/image";
-import { BookMarked, Edit, History, Tag } from "lucide-react";
+import { BookMarked, History, Tag } from "lucide-react";
 import SearchHeader from "@/components/ui/search/search-header";
 import Link from "next/link";
 import { useVerifyUser } from "@/services/queries/useAuth";
@@ -17,24 +17,17 @@ const Header = () => {
     <>
       <div className={styles.header}>
         <div className={styles.header_left}>
-          {/* <div className={styles.header_left_logo}>
-            <Image
-              src="https://static.hentai18.net/images/logo.png"
-              alt="Hentai logo"
-              width={180}
-              height={40}
-            />
-          </div> */}
+          <Link href={"/"}>
+            <div className={styles.header_left_actions_item}>
+              <span className={styles.header_left_actions_item_text}>
+                GNOUD
+              </span>
+            </div>
+          </Link>
           <ul className={styles.header_left_actions}>
             <li className={styles.header_left_actions_item}>
               <Tag />
               <span className={styles.header_left_actions_item_text}>Tags</span>
-            </li>
-            <li className={styles.header_left_actions_item}>
-              <Edit />
-              <span className={styles.header_left_actions_item_text}>
-                Categories
-              </span>
             </li>
 
             <li className={styles.header_left_actions_item}>
@@ -91,6 +84,17 @@ const Header = () => {
             <span className={styles.header_under_lists_item_text}>
               Highlight
             </span>
+          </li>
+          <li className={styles.header_under_lists_item}>
+            <span className={styles.header_under_lists_item_text}>Action</span>
+          </li>
+          <li className={styles.header_under_lists_item}>
+            <span className={styles.header_under_lists_item_text}>
+              Supernatural
+            </span>
+          </li>
+          <li className={styles.header_under_lists_item}>
+            <span className={styles.header_under_lists_item_text}></span>
           </li>
         </ul>
       </div>

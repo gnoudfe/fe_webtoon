@@ -7,6 +7,7 @@ export interface StoryDetailData {
   author?: {
     _id: string;
     name: string;
+    slug: string;
   };
   category?: {
     slug: string;

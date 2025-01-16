@@ -9,24 +9,29 @@ interface CommentSectionOptionsProps {
   setIsEditComment: React.Dispatch<React.SetStateAction<string | null>>;
   commentId: string;
   setActiveCommentId: React.Dispatch<React.SetStateAction<string | null>>;
+  contentEditValue: string;
+  setEditComment: React.Dispatch<React.SetStateAction<string>> | undefined;
 }
 
 const CommentOptions = ({
   handleDeleteComment,
   setIsEditComment,
   setActiveCommentId,
+  setEditComment,
   activeCommentId,
   commentId,
+  contentEditValue,
 }: CommentSectionOptionsProps) => {
   const handleEditComment = () => {
     setIsEditComment(commentId);
     setActiveCommentId(null);
+    if (setEditComment) setEditComment(contentEditValue);
   };
   const optionRefs = React.useRef<HTMLUListElement>(null);
 
   useDetectClickOutside(optionRefs, () => {
     if (activeCommentId) {
-      setActiveCommentId(null)
+      setActiveCommentId(null);
     }
   });
   return (

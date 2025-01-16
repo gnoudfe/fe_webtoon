@@ -50,9 +50,12 @@ const DetailChapterInfor = ({
       {showStickyPage && <StickyPage chapterDetailData={chapterDetailData} />}
       <div className={styles.detail_chapter_infor} ref={scrollRef}>
         <h4 className={styles.detail_chapter_infor_nav}>
-          <span className={styles.detail_chapter_infor_nav_text}>
+          <Link
+            href={`/read-hentai/${chapterDetailData?.data?.currentChapter?.story_id?.slug}`}
+            className={styles.detail_chapter_infor_nav_text}
+          >
             {chapterDetailData?.data?.currentChapter?.story_id?.title}
-          </span>
+          </Link>
           <span className={styles.detail_chapter_infor_nav_line}>/</span>
           <span className={styles.detail_chapter_infor_nav_text}>
             {chapterDetailData?.data?.currentChapter?.title}
