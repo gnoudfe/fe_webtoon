@@ -90,6 +90,7 @@ const CommentSection = ({
 
   const handleAddComment = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!comment) return;
     try {
       const response = await addCommentMutation.mutateAsync({
         slug: storySlug || "",
@@ -187,12 +188,16 @@ const CommentSection = ({
                   className={styles.comment_section_owner_input}
                 />
                 <button
+                  type="button"
                   className={styles.comment_section_owner_cancel_btn}
                   onClick={() => setComment("")}
                 >
                   Cancel
                 </button>
-                <button className={styles.comment_section_owner_btn}>
+                <button
+                  type="submit"
+                  className={styles.comment_section_owner_btn}
+                >
                   {addCommentMutation.isPending ? "Loading..." : "Comment"}
                 </button>
               </form>

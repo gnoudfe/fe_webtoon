@@ -59,19 +59,103 @@ export const useGetStoriesByType = ({
   return useInfiniteQuery({
     queryKey: ["getStoriesByType", slug, type],
     queryFn: async ({ pageParam }) => {
-      const response = await StoryWebtoonApi.GetStoriesByType({
-        slug,
-        type,
-        page: pageParam,
-      });
-      if (response) {
-        return response;
+      try {
+        const response = await StoryWebtoonApi.GetStoriesByType({
+          slug,
+          type,
+          page: pageParam,
+        });
+        if (response.status === "error") {
+          throw new Error(response.message);
+        }
+        if (response) {
+          console.log("response", response);
+          return response;
+        }
+      } catch (error) {
+        console.log(error);
+        throw error;
       }
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const { currentPage, totalPages } = lastPage.pagination;
       return currentPage < totalPages ? currentPage + 1 : null;
+    },
+  });
+};
+
+export const useGetStories = ({
+  type,
+}: {
+  type: "latest" | "top" | "highlight" | "all";
+}) => {
+  return useInfiniteQuery({
+    queryKey: ["getStories", type],
+    queryFn: async ({ pageParam }) => {
+      const response = await StoryWebtoonApi.GetListStories({
+        type,
+        page: pageParam,
+      });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.pagination;
+      return currentPage < totalPages ? currentPage + 1 : null;
+    },
+  });
+};
+
+export const useGetFollowingStories = () => {
+  return useInfiniteQuery({
+    queryKey: ["getFollowingStories"],
+    queryFn: async ({ pageParam }) => {
+      const response = await StoryWebtoonApi.GetFollowingStories({
+        page: pageParam,
+      });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.pagination;
+      return currentPage < totalPages ? currentPage + 1 : null;
+    },
+    staleTime : 0,
+    refetchOnMount: true,
+  });
+};
+
+export const UseFollowStoryMutation = () => {
+  return useMutation({
+    mutationFn: async ({ slug }: { slug: string }) => {
+      const response = await StoryWebtoonApi.FollowStory({ slug });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+  });
+};
+
+export const UseUnFollowStoryMutation = () => {
+  return useMutation({
+    mutationFn: async ({ slug }: { slug: string }) => {
+      const response = await StoryWebtoonApi.UnFollowStory({ slug });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
     },
   });
 };

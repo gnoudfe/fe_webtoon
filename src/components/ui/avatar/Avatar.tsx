@@ -107,7 +107,7 @@ const AvatarInfor: React.FC<AvatarInforProps> = ({
         <Settings2Icon size={20} color="#000" />
         <p className={styles.header_avatar_infor_lists_item_text}>Settings</p>
       </Link>
-      <Link href="/settings" className={styles.header_avatar_infor_lists_item}>
+      <Link href="/following" className={styles.header_avatar_infor_lists_item}>
         <ArchiveIcon size={20} color="#000" />
         <p className={styles.header_avatar_infor_lists_item_text}>
           My Follow Stories

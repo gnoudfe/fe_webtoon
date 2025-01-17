@@ -1,19 +1,12 @@
 "use client";
 import React, { useMemo } from "react";
 import styles from "./styles.module.scss";
-import StoryCard from "../../story-card";
-import { useGetStoriesByType } from "@/services/queries/useStory";
-import { StoryDetailData } from "@/types/story";
-import InfiniteScroll from "../../InfiniteScroll";
+import { useGetFollowingStories } from "@/services/queries/useStory";
 import ListStorySkeleton from "../list-story-skeleton";
-
-const ListStoryCategory = ({
-  slug,
-  type,
-}: {
-  slug: string;
-  type: "tag" | "category";
-}) => {
+import InfiniteScroll from "../../InfiniteScroll";
+import { StoryDetailData } from "@/types/story";
+import StoryCard from "../../story-card";
+const ListStoryFollowing = () => {
   const {
     data,
     fetchNextPage,
@@ -21,17 +14,13 @@ const ListStoryCategory = ({
     isLoading,
     isFetchingNextPage,
     error,
-  } = useGetStoriesByType({
-    slug,
-    type,
-  });
+  } = useGetFollowingStories();
 
-  const typeStories = useMemo(() => {
+  const followingStories = useMemo(() => {
     return data?.pages?.reduce((acc, page) => {
       return [...acc, ...page.data];
     }, []);
   }, [data]);
-
   if (error) {
     return (
       <div className={styles.error_message}>
@@ -39,7 +28,7 @@ const ListStoryCategory = ({
       </div>
     );
   }
-  if (!isLoading && typeStories?.length === 0) {
+  if (!isLoading && followingStories?.length === 0) {
     return <div className={styles.error_message}>No stories found.</div>;
   }
 
@@ -51,7 +40,7 @@ const ListStoryCategory = ({
       hasMore={hasNextPage || !isFetchingNextPage}
     >
       <div className={`${styles.list_story_category}`}>
-        {typeStories?.map((story: StoryDetailData) => (
+        {followingStories?.map((story: StoryDetailData) => (
           <StoryCard key={story._id} storyData={story} />
         ))}
       </div>
@@ -59,4 +48,4 @@ const ListStoryCategory = ({
   );
 };
 
-export default ListStoryCategory;
+export default ListStoryFollowing;

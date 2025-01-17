@@ -88,29 +88,7 @@ class StoryWebtoonApiRequest {
       },
     });
   }
-  public GetStoriesByType({
-    slug,
-    type,
-    limit = 15,
-    page = 1,
-  }: {
-    slug: string;
-    type: "tag" | "category";
-    limit?: number | null;
-    page?: number | null;
-  }): Promise<any> {
-    const endpoint =
-      type === "tag"
-        ? APP_API_ENDPOINT.STORY.GET_STORY_BY_TAG(slug, page, limit)
-        : APP_API_ENDPOINT.STORY.GET_STORY_BY_CATEGORY(slug, page, limit);
 
-    return apiBaseServiceInstance.Http({
-      path: endpoint,
-      config: {
-        method: "GET",
-      },
-    });
-  }
   public GetTopStories({
     limit = 15,
     page = 1,
@@ -155,6 +133,55 @@ class StoryWebtoonApiRequest {
     });
   }
 
+  public GetListStories({
+    type,
+    limit = 15,
+    page = 1,
+  }: {
+    type: "latest" | "top" | "highlight" | "all";
+    limit?: number | null;
+    page: number | null;
+  }): Promise<any> {
+    const endpoint =
+      type === "latest"
+        ? APP_API_ENDPOINT.STORY.GET_LATEST_STORIES(limit, page)
+        : type === "top"
+        ? APP_API_ENDPOINT.STORY.GET_TOP_STORIES(limit, page)
+        : type === "highlight"
+        ? APP_API_ENDPOINT.STORY.GET_HIGHLIGHT_STORIES(limit, page)
+        : APP_API_ENDPOINT.STORY.GET_ALL_STORIES(limit, page);
+
+    return apiBaseServiceInstance.Http({
+      path: endpoint,
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public GetStoriesByType({
+    slug,
+    type,
+    limit = 15,
+    page = 1,
+  }: {
+    slug: string;
+    type: "tag" | "category";
+    limit?: number | null;
+    page?: number | null;
+  }): Promise<any> {
+    const endpoint =
+      type === "tag"
+        ? APP_API_ENDPOINT.STORY.GET_STORY_BY_TAG(slug, page, limit)
+        : APP_API_ENDPOINT.STORY.GET_STORY_BY_CATEGORY(slug, page, limit);
+
+    return apiBaseServiceInstance.Http({
+      path: endpoint,
+      config: {
+        method: "GET",
+      },
+    });
+  }
   public GetDetailStories({ slug }: { slug: string }): Promise<any> {
     return apiBaseServiceInstance.Http({
       path: APP_API_ENDPOINT.STORY.GET_STORY_DETAIL(slug),
@@ -256,6 +283,39 @@ class StoryWebtoonApiRequest {
       config: {
         method: "PUT",
         body,
+      },
+    });
+  }
+
+  public FollowStory({ slug }: { slug: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.FOLLOW_STORY(slug),
+      config: {
+        method: "POST",
+      },
+    });
+  }
+
+  public UnFollowStory({ slug }: { slug: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.UNFOLLOW_STORY(slug),
+      config: {
+        method: "DELETE",
+      },
+    });
+  }
+
+  public GetFollowingStories({
+    page = 1,
+    limit = 15,
+  }: {
+    page?: number;
+    limit?: number;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_FOLLOWING_STORIES(page, limit),
+      config: {
+        method: "GET",
       },
     });
   }

@@ -5,6 +5,7 @@ import { ChapterResponseData, ChapterType } from "@/types/chapter";
 import { Menu } from "lucide-react";
 import StickyPage from "../sticky-page";
 import Link from "next/link";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface DetailChapterInforProps {
   chapterDetailData: ChapterResponseData;
@@ -19,6 +20,11 @@ const DetailChapterInfor = ({
   const scrollRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // Sử dụng debounce để giảm tần suất cập nhật trạng thái
+  const debounceSetShowStickyPage = useDebounce((value: boolean) => {
+    setShowStickyPage(value);
+  }, 100); // Độ trễ là 100ms
+
   useEffect(() => {
     if (observerRef.current) {
       observerRef.current.disconnect();
@@ -26,12 +32,16 @@ const DetailChapterInfor = ({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setShowStickyPage(!entry.isIntersecting);
+        const isAboveViewport = entry.boundingClientRect.bottom < 0; // Phần tử đã trượt khỏi màn hình
+        const isBelowViewport =
+          entry.boundingClientRect.top > window.innerHeight; // Phần tử nằm dưới màn hình
+        debounceSetShowStickyPage(isAboveViewport || isBelowViewport);
       },
       {
-        threshold: 0.1,
+        threshold: 0, // Kích hoạt ngay khi phần tử bắt đầu rời khỏi viewport
       }
     );
+
     observerRef.current = observer;
 
     if (scrollRef.current) {
@@ -47,7 +57,13 @@ const DetailChapterInfor = ({
 
   return (
     <>
-      {showStickyPage && <StickyPage chapterDetailData={chapterDetailData} />}
+      <StickyPage
+        chapterDetailData={chapterDetailData}
+        show={showStickyPage}
+        storyTitle={chapterDetailData?.data?.currentChapter?.story_id?.title}
+        storySlug={chapterDetailData?.data?.currentChapter?.story_id?.slug}
+
+      />
       <div className={styles.detail_chapter_infor} ref={scrollRef}>
         <h4 className={styles.detail_chapter_infor_nav}>
           <Link

@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import { TagData } from "@/types/tag";
-import { Bookmark, PointerIcon } from "lucide-react";
+import { PointerIcon } from "lucide-react";
 import StoryCard from "@/components/ui/story-card";
 import Link from "next/link";
 import { formatTime } from "@/utils/formatTime";
 import { StoryDetailResponseData } from "@/types/story";
 import { StoryWebtoonApi } from "@/services/apiRequest";
+import ButtonFollow from "./button-follow";
 async function getDetailStories(slug: string) {
   const response: StoryDetailResponseData =
     await StoryWebtoonApi.GetDetailStories({ slug });
@@ -76,12 +77,10 @@ const DetailPageHero = async ({ slug }: { slug: string }) => {
                 Read now
               </Link>
             </button>
-            <button className={styles.detail_page_hero_content_infor_btn}>
-              <Bookmark color="#fff" />
-              <span className={styles.detail_page_hero_content_infor_btn_text}>
-                Follow
-              </span>
-            </button>
+            <ButtonFollow
+              slug={detailStoryData?.data?.slug}
+              storyId={detailStoryData?.data?._id}
+            />
           </div>
         </div>
       </div>

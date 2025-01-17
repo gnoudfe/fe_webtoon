@@ -32,9 +32,9 @@ const Header = () => {
 
             <li className={styles.header_left_actions_item}>
               <BookMarked />
-              <span className={styles.header_left_actions_item_text}>
+              <Link href={"/following"} className={styles.header_left_actions_item_text}>
                 Bookmark
-              </span>
+              </Link>
             </li>
             <li className={styles.header_left_actions_item}>
               <History />
@@ -72,29 +72,30 @@ const Header = () => {
       <div className={styles.header_under}>
         <ul className={styles.header_under_lists}>
           <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}>All</span>
+            <Link href={"/all"} className={styles.header_under_lists_item_text}>
+              All
+            </Link>
           </li>
           <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}>Latest</span>
+            <Link
+              href={"/latest"}
+              className={styles.header_under_lists_item_text}
+            >
+              Latest
+            </Link>
           </li>
           <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}>Top</span>
+            <Link href={"/top"} className={styles.header_under_lists_item_text}>
+              Top
+            </Link>
           </li>
           <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}>
+            <Link
+              href={"/highlight"}
+              className={styles.header_under_lists_item_text}
+            >
               Highlight
-            </span>
-          </li>
-          <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}>Action</span>
-          </li>
-          <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}>
-              Supernatural
-            </span>
-          </li>
-          <li className={styles.header_under_lists_item}>
-            <span className={styles.header_under_lists_item_text}></span>
+            </Link>
           </li>
         </ul>
       </div>

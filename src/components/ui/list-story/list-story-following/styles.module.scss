@@ -1,0 +1,13 @@
+.list_story_category {
+    display: grid;
+    width: 100%;
+    grid-gap: 20px;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .error_message {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    text-transform: capitalize;
+  }

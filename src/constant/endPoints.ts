@@ -45,5 +45,9 @@ export const APP_API_ENDPOINT = Object.freeze({
       page?: number | null,
       limit?: number | null
     ) => `/stories/category/${slug}?page=${page}&limit=${limit}`,
+    FOLLOW_STORY: (slug: string) => `/stories/${slug}/follow`,
+    UNFOLLOW_STORY: (slug: string) => `/stories/${slug}/unfollow`,
+    GET_FOLLOWING_STORIES: (page: number | null, limit: number | null) =>
+      `/followed?page=${page}&limit=${limit}`,
   },
 });

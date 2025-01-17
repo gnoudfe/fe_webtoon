@@ -4,7 +4,6 @@ import {
   useMutation,
   UseMutationOptions,
   useQuery,
-  UseQueryOptions,
 } from "@tanstack/react-query";
 import { useGlobalStore } from "@/stores/state";
 import { AuthWebtoonApi } from "../apiRequest";
@@ -38,13 +37,10 @@ export const useRegisterMutation = (
       AuthWebtoonApi.Register({ body }),
   });
 };
-export const useVerifyUser = (
-  options?: Omit<UseQueryOptions<any>, "queryKey" | "queryFn">
-) => {
-  const { setIsLoggedIn , setUserData } = useGlobalStore();
+export const useVerifyUser = () => {
+  const { setIsLoggedIn, setUserData } = useGlobalStore();
 
   return useQuery({
-    ...options,
     queryKey: ["verifyUser"],
     queryFn: async () => {
       const response = await AuthWebtoonApi.VerifyUser();

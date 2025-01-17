@@ -2,17 +2,15 @@
 import React, { useMemo } from "react";
 import styles from "./styles.module.scss";
 import StoryCard from "../../story-card";
-import { useGetStoriesByType } from "@/services/queries/useStory";
+import { useGetStories } from "@/services/queries/useStory";
 import { StoryDetailData } from "@/types/story";
 import InfiniteScroll from "../../InfiniteScroll";
 import ListStorySkeleton from "../list-story-skeleton";
 
-const ListStoryCategory = ({
-  slug,
+const ListStoryType = ({
   type,
 }: {
-  slug: string;
-  type: "tag" | "category";
+  type: "latest" | "top" | "highlight" | "all";
 }) => {
   const {
     data,
@@ -21,8 +19,7 @@ const ListStoryCategory = ({
     isLoading,
     isFetchingNextPage,
     error,
-  } = useGetStoriesByType({
-    slug,
+  } = useGetStories({
     type,
   });
 
@@ -39,9 +36,9 @@ const ListStoryCategory = ({
       </div>
     );
   }
-  if (!isLoading && typeStories?.length === 0) {
+
+  if (!isLoading && typeStories?.length === 0)
     return <div className={styles.error_message}>No stories found.</div>;
-  }
 
   return isLoading ? (
     <ListStorySkeleton />
@@ -59,4 +56,4 @@ const ListStoryCategory = ({
   );
 };
 
-export default ListStoryCategory;
+export default ListStoryType;

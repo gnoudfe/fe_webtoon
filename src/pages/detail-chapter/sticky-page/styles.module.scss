@@ -8,4 +8,29 @@
   align-items: center;
   justify-content: center;
   z-index: 15;
+  opacity: 0;
+  visibility: hidden;
+  gap: 20px;
+  &_icon {
+    width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  &_title {
+    color: #fff;
+    font-size: 18px;
+  }
+  &_show {
+    opacity: 1;
+    visibility: visible;
+  }
 }

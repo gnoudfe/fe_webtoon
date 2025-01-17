@@ -1,1 +1,1 @@
-export { default } from "./DetailChapterInfor";
+export { DetailChapterInfor, DetailChapterButton } from "./DetailChapterInfor";
