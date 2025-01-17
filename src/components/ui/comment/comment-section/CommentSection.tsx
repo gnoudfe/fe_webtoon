@@ -83,9 +83,6 @@ const CommentSection = ({
     queryKey: ["comments", pagination.currentPage, storySlug, slugChapter],
     queryFn: () => fetchComments(pagination.currentPage),
     placeholderData: keepPreviousData,
-    staleTime: 0,
-    refetchInterval: 60000,
-    refetchOnWindowFocus: true,
   });
 
   const handleAddComment = async (e: React.FormEvent) => {

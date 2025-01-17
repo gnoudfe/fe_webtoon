@@ -129,8 +129,6 @@ export const useGetFollowingStories = () => {
       const { currentPage, totalPages } = lastPage.pagination;
       return currentPage < totalPages ? currentPage + 1 : null;
     },
-    staleTime : 0,
-    refetchOnMount: true,
   });
 };
 

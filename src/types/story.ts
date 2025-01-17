@@ -42,9 +42,9 @@ export interface StoryResponseData {
 export interface PaginationDataType {
   currentPage: number;
   totalPages: number;
-  totalStories: number;
+  totalStories?: number;
   totalComments: number;
-  limit: number;
+  limit?: number;
 }
 
 export interface StoryDetailResponseData {

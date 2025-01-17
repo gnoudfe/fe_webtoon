@@ -30,7 +30,10 @@ const ButtonFollow = ({ slug, storyId }: { slug: string; storyId: string }) => {
       }
       if (response && response.status === "success") {
         queryClient.refetchQueries({ queryKey: ["verifyUser"] });
-        queryClient.invalidateQueries({ queryKey: ["getFollowingStories"] });
+        queryClient.invalidateQueries({
+          queryKey: ["getFollowingStories"],
+          refetchType: "all",
+        });
       }
     } catch (error) {
       console.log(error);

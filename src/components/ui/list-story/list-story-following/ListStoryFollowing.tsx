@@ -21,6 +21,7 @@ const ListStoryFollowing = () => {
       return [...acc, ...page.data];
     }, []);
   }, [data]);
+
   if (error) {
     return (
       <div className={styles.error_message}>
