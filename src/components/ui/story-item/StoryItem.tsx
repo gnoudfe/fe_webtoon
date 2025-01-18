@@ -8,17 +8,17 @@ interface StoryItemProps {
 }
 
 const StoryItem = ({ topStory }: StoryItemProps) => {
-  // href={`/read-hentai/${topStory.slug}`}
+  // href={`/read/${topStory.slug}`}
   return (
     <div className={styles.story_item}>
-      <Link href={`/read-hentai/${topStory.slug}`}>
+      <Link href={`/read/${topStory.slug}`}>
         <div className={styles.story_item_thumbnail}>
           <img src={topStory?.thumbnail} alt={topStory.title} />
         </div>
       </Link>
       <div className={styles.story_item_infor}>
         <Link
-          href={`/read-hentai/${topStory.slug}`}
+          href={`/read/${topStory.slug}`}
           className={styles.story_item_infor_title}
         >
           {topStory.title}

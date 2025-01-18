@@ -19,7 +19,7 @@ export const DataMockResponse = {
     },
     {
       _id: "678613f7cc5d54f473d73795",
-      slug: "hentai",
+      slug: "read",
       name: "Hentai",
     },
     {

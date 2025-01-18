@@ -13,7 +13,7 @@ const StoryCard = ({ storyData, type = "normal" }: StoryCardProps) => {
   return type === "normal" ? (
     <Link
       className={styles.story_card}
-      href={`/read-hentai/${storyData?.slug}`}
+      href={`/read/${storyData?.slug}`}
     >
       <div className={styles.story_card_thumbnail}>
         <img src={storyData?.thumbnail} alt={storyData?.title} />

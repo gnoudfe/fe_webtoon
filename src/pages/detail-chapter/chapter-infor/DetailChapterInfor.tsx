@@ -3,9 +3,7 @@ import React, { useEffect, useRef } from "react";
 import styles from "./styles.module.scss";
 import { ChapterResponseData, ChapterType } from "@/types/chapter";
 import { Menu } from "lucide-react";
-import StickyPage from "../sticky-page";
 import Link from "next/link";
-import { useDebounce } from "@/hooks/useDebounce";
 
 interface DetailChapterInforProps {
   chapterDetailData: ChapterResponseData;
@@ -16,58 +14,14 @@ const DetailChapterInfor = ({
   chapterDetailData,
   type,
 }: DetailChapterInforProps) => {
-  const [showStickyPage, setShowStickyPage] = React.useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-
-  // Sử dụng debounce để giảm tần suất cập nhật trạng thái
-  const debounceSetShowStickyPage = useDebounce((value: boolean) => {
-    setShowStickyPage(value);
-  }, 100); // Độ trễ là 100ms
-
-  useEffect(() => {
-    if (observerRef.current) {
-      observerRef.current.disconnect();
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const isAboveViewport = entry.boundingClientRect.bottom < 0; // Phần tử đã trượt khỏi màn hình
-        const isBelowViewport =
-          entry.boundingClientRect.top > window.innerHeight; // Phần tử nằm dưới màn hình
-        debounceSetShowStickyPage(isAboveViewport || isBelowViewport);
-      },
-      {
-        threshold: 0, // Kích hoạt ngay khi phần tử bắt đầu rời khỏi viewport
-      }
-    );
-
-    observerRef.current = observer;
-
-    if (scrollRef.current) {
-      observer.observe(scrollRef.current);
-    }
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, []);
 
   return (
     <>
-      <StickyPage
-        chapterDetailData={chapterDetailData}
-        show={showStickyPage}
-        storyTitle={chapterDetailData?.data?.currentChapter?.story_id?.title}
-        storySlug={chapterDetailData?.data?.currentChapter?.story_id?.slug}
-
-      />
       <div className={styles.detail_chapter_infor} ref={scrollRef}>
         <h4 className={styles.detail_chapter_infor_nav}>
           <Link
-            href={`/read-hentai/${chapterDetailData?.data?.currentChapter?.story_id?.slug}`}
+            href={`/read/${chapterDetailData?.data?.currentChapter?.story_id?.slug}`}
             className={styles.detail_chapter_infor_nav_text}
           >
             {chapterDetailData?.data?.currentChapter?.story_id?.title}
@@ -124,7 +78,7 @@ const DetailChapterButton = ({
         </div>
       ) : (
         <Link
-          href={`/read-hentai/${chapterDetailData?.data?.currentChapter?.story_id.slug}/${previousChapter}`}
+          href={`/read/${chapterDetailData?.data?.currentChapter?.story_id.slug}/${previousChapter}`}
           className={styles.detail_chapter_buttons_btn}
         >
           Previous Chapter
@@ -152,7 +106,7 @@ const DetailChapterButton = ({
         </div>
       ) : (
         <Link
-          href={`/read-hentai/${chapterDetailData?.data?.currentChapter?.story_id.slug}/${nextChapter}`}
+          href={`/read/${chapterDetailData?.data?.currentChapter?.story_id.slug}/${nextChapter}`}
           className={styles.detail_chapter_buttons_btn}
         >
           Next Chapter
@@ -192,7 +146,7 @@ const DetailChapterMenuSelect = ({
     >
       {chapterLists?.map((chapter) => (
         <Link
-          href={`/read-hentai/${storySlug}/${chapter?.slug}`}
+          href={`/read/${storySlug}/${chapter?.slug}`}
           className={styles.detail_chapter_menu_item}
           key={chapter?._id}
         >

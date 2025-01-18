@@ -17,22 +17,9 @@
     width: 100%;
     overflow-y: scroll;
     max-height: 300px;
-  }
-}
-.chapter_item {
-  display: block;
-  font-weight: 400;
-  background: #111;
-  padding: 10px 10px;
-  border-radius: 5px;
-  width: 100%;
-  cursor: pointer;
-  &_title {
-    color: #fff;
-    font-size: 14px;
-  }
-  &_date {
-    color: #777777;
-    font-size: 13px;
+    @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    }
   }
 }

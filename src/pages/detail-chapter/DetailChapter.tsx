@@ -3,8 +3,8 @@ import styles from "./styles.module.scss";
 import { StoryWebtoonApi } from "@/services/apiRequest";
 import { ChapterResponseData } from "@/types/chapter";
 import { DetailChapterInfor } from "./chapter-infor/DetailChapterInfor";
-import { CommentSection } from "@/components/ui/comment";
 import ScrollToTop from "@/components/ui/scrollToTop";
+import CommentSectionChapter from "@/components/ui/comment/comment-section/comment-section-chapter";
 
 interface DetailChapterProps {
   slug: string;
@@ -38,10 +38,9 @@ const DetailChapter = async ({ slug, slugChapter }: DetailChapterProps) => {
         )}
       </div>
       <div className={styles.detail_chapter_comment}>
-        <CommentSection
+        <CommentSectionChapter
           chapterId={chapterDetailData?.data?.currentChapter?._id}
           storySlug={chapterDetailData?.data?.currentChapter?.story_id?.slug}
-          isAddComment={true}
           slugChapter={slugChapter}
         />
       </div>

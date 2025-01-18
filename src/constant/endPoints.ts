@@ -1,7 +1,7 @@
 export const APP_API_ENDPOINT = Object.freeze({
   ENDPOINT: {
     NEXT_PUBLIC_BASE_URL:
-      process.env.NEXT_PUBLIC_BASE_URL ?? "https://be-crawl-webtoon.vercel.app",
+      process.env.NEXT_PUBLIC_BASE_URL ?? ("http://localhost:5000" as string),
     NEXT_PUBLIC_PREFIX_URL: process.env.NEXT_PUBLIC_PREFIX_URL ?? "api",
   },
   AUTH: {
@@ -49,5 +49,9 @@ export const APP_API_ENDPOINT = Object.freeze({
     UNFOLLOW_STORY: (slug: string) => `/stories/${slug}/unfollow`,
     GET_FOLLOWING_STORIES: (page: number | null, limit: number | null) =>
       `/followed?page=${page}&limit=${limit}`,
+    ADD_STORY_HISTORY: (slug: string) => `/stories/${slug}/history`,
+    GET_STORY_HISTORY: (page: number | null, limit: number | null) =>
+      `/reading-history?page=${page}&limit=${limit}`,
+    SEARCH_STORY: (query: string | null) => `/search?query=${query}`,
   },
 });

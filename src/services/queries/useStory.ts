@@ -1,5 +1,6 @@
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import { StoryWebtoonApi } from "../apiRequest";
+import { SearchResponseType } from "@/types/search";
 
 export const useAddCommentMutatation = () => {
   return useMutation({
@@ -132,6 +133,41 @@ export const useGetFollowingStories = () => {
   });
 };
 
+export const useGetHistoryStories = () => {
+  return useInfiniteQuery({
+    queryKey: ["getHistoryStories"],
+    queryFn: async ({ pageParam }) => {
+      const response = await StoryWebtoonApi.GetHistoryStories({
+        page: pageParam,
+      });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      const { currentPage, totalPages } = lastPage.pagination;
+      return currentPage < totalPages ? currentPage + 1 : null;
+    },
+  });
+};
+
+export const useAddHistoryStoryMutation = () => {
+  return useMutation({
+    mutationFn: async ({ slug }: { slug: string }) => {
+      const response = await StoryWebtoonApi.AddHistoryStory({ slug });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    mutationKey: ["addHistoryStory"],
+  });
+};
+
 export const UseFollowStoryMutation = () => {
   return useMutation({
     mutationFn: async ({ slug }: { slug: string }) => {
@@ -142,6 +178,7 @@ export const UseFollowStoryMutation = () => {
         throw new Error(response.message);
       }
     },
+    mutationKey: ["followStory"],
   });
 };
 
@@ -155,5 +192,22 @@ export const UseUnFollowStoryMutation = () => {
         throw new Error(response.message);
       }
     },
+    mutationKey: ["unfollowStory"],
+  });
+};
+
+export const UseGetSearchStories = ({ query }: { query: string | null }) => {
+  return useQuery({
+    queryKey: ["getSearchStories", query],
+    queryFn: async () => {
+      const response: SearchResponseType =
+        await StoryWebtoonApi.GetSearchStories({ query });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    enabled: !!query,
   });
 };

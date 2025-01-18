@@ -6,9 +6,7 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/autoplay";
-import {
-  StoryResponseData,
-} from "@/types/story";
+import { StoryResponseData } from "@/types/story";
 import StoryCard from "../../story-card";
 
 interface SlideStoryProps {
@@ -27,6 +25,21 @@ const SlideStoryList = ({ highlightStories }: SlideStoryProps) => {
         autoplay={{
           delay: 4000,
           disableOnInteraction: false,
+        }}
+        breakpoints={{
+          1024: {
+            slidesPerView: 5,
+          },
+          768: {
+            slidesPerView: 4,
+          },
+          640: {
+            slidesPerView: 3,
+          },
+          320: {
+            slidesPerView: 2,
+            spaceBetween: 5,
+          },
         }}
         speed={700}
       >

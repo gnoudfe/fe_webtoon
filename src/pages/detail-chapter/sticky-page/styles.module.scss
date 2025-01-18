@@ -8,9 +8,16 @@
   align-items: center;
   justify-content: center;
   z-index: 15;
-  opacity: 0;
-  visibility: hidden;
   gap: 20px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+  &_row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
   &_icon {
     width: 38px;
     display: flex;
@@ -28,9 +35,7 @@
   &_title {
     color: #fff;
     font-size: 18px;
-  }
-  &_show {
-    opacity: 1;
-    visibility: visible;
+    max-width: 300px;
+    overflow: hidden;
   }
 }

@@ -19,6 +19,7 @@ interface CommentItemProps {
   setEditComment?: React.Dispatch<React.SetStateAction<string>>;
   editComment?: string;
   editCommentLoading?: boolean;
+  noOptions?: boolean;
 }
 
 const CommentItem = ({
@@ -32,6 +33,7 @@ const CommentItem = ({
   setEditComment,
   editComment,
   editCommentLoading,
+  noOptions = false,
 }: CommentItemProps) => {
   const { userData } = useGlobalStore();
   const handleActionMessage = (commentId: string) => {
@@ -94,7 +96,7 @@ const CommentItem = ({
           </div>
         )}
       </div>
-      {userData?._id === commentsDataItem?.user_id?._id && (
+      {userData?._id === commentsDataItem?.user_id?._id && !noOptions && (
         <div className={styles.comment_item_icon_container}>
           <div
             className={styles.comment_item_icon}

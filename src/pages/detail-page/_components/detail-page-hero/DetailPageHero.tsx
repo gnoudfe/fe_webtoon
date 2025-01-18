@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./styles.module.scss";
 import { TagData } from "@/types/tag";
-import { PointerIcon } from "lucide-react";
 import StoryCard from "@/components/ui/story-card";
 import Link from "next/link";
 import { formatTime } from "@/utils/formatTime";
 import { StoryDetailResponseData } from "@/types/story";
 import { StoryWebtoonApi } from "@/services/apiRequest";
 import ButtonFollow from "./button-follow";
+import ButtonReadNow from "./button-read-now/ButtonReadNow";
 async function getDetailStories(slug: string) {
   const response: StoryDetailResponseData =
     await StoryWebtoonApi.GetDetailStories({ slug });
@@ -16,7 +16,6 @@ async function getDetailStories(slug: string) {
 
 const DetailPageHero = async ({ slug }: { slug: string }) => {
   const detailStoryData = await getDetailStories(slug);
-
   return (
     <div className={styles.detail_page_hero}>
       <div className={styles.detail_page_hero_overlay}></div>
@@ -66,17 +65,10 @@ const DetailPageHero = async ({ slug }: { slug: string }) => {
             type={2}
           />
           <div className={styles.detail_page_hero_content_infor_container}>
-            <button
-              className={`${styles.detail_page_hero_content_infor_btn} ${styles.detail_page_hero_content_infor_btn_read}`}
-            >
-              <PointerIcon color="#fff" />
-              <Link
-                href={`/read-hentai/${detailStoryData?.data.slug}/chapter-1`}
-                className={styles.detail_page_hero_content_infor_btn_text}
-              >
-                Read now
-              </Link>
-            </button>
+            <ButtonReadNow
+              slug={detailStoryData?.data.slug}
+              storyId={detailStoryData?.data?._id}
+            />
             <ButtonFollow
               slug={detailStoryData?.data?.slug}
               storyId={detailStoryData?.data?._id}

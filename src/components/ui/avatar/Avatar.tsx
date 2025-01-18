@@ -113,7 +113,7 @@ const AvatarInfor: React.FC<AvatarInforProps> = ({
           My Follow Stories
         </p>
       </Link>
-      <Link href="/settings" className={styles.header_avatar_infor_lists_item}>
+      <Link href="/history" className={styles.header_avatar_infor_lists_item}>
         <HistoryIcon size={20} color="#000" />
         <p className={styles.header_avatar_infor_lists_item_text}>
           My History

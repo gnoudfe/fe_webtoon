@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./styles.module.scss";
-import Link from "next/link";
 import { StoryDetailResponseData } from "@/types/story";
 import { StoryWebtoonApi } from "@/services/apiRequest";
+import ChapterItem from "./chapter-item";
 
 interface ListChaptersProps {
   slug: string;
@@ -28,30 +28,11 @@ const ListChapters = async ({ slug }: ListChaptersProps) => {
             id={chapter?._id}
             slug={chapter?.slug}
             storySlug={detailStories?.data?.slug}
+            storyId={detailStories?.data?._id}
           />
         ))}
       </div>
     </div>
-  );
-};
-
-interface ChapterItemProps {
-  title: string;
-  time: string;
-  id: string;
-  slug: string;
-  storySlug: string;
-}
-
-const ChapterItem = ({ title, time, slug, storySlug }: ChapterItemProps) => {
-  return (
-    <Link
-      href={`/read-hentai/${storySlug}/${slug}`}
-      className={styles.chapter_item}
-    >
-      <h5 className={styles.chapter_item_title}>{title}</h5>
-      <p className={styles.chapter_item_date}>{time}</p>
-    </Link>
   );
 };
 

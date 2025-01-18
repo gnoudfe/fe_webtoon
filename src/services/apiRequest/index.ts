@@ -319,6 +319,39 @@ class StoryWebtoonApiRequest {
       },
     });
   }
+
+  public AddHistoryStory({ slug }: { slug: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.ADD_STORY_HISTORY(slug),
+      config: {
+        method: "POST",
+      },
+    });
+  }
+
+  public GetHistoryStories({
+    page = 1,
+    limit = 15,
+  }: {
+    page?: number;
+    limit?: number;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_STORY_HISTORY(page, limit),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public GetSearchStories({ query }: { query: string | null }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.SEARCH_STORY(query),
+      config: {
+        method: "GET",
+      },
+    });
+  }
 }
 
 const AuthWebtoonApi = new AuthWebtoonApiRequest();

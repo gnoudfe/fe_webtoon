@@ -38,9 +38,9 @@ const Header = () => {
             </li>
             <li className={styles.header_left_actions_item}>
               <History />
-              <span className={styles.header_left_actions_item_text}>
+              <Link href={"/history"} className={styles.header_left_actions_item_text}>
                 History
-              </span>
+              </Link>
             </li>
           </ul>
         </div>

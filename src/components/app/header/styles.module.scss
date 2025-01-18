@@ -21,6 +21,9 @@
       align-items: center;
       gap: 16px;
       list-style-type: none;
+      @media (max-width: 768px) {
+        display: none;
+      }
       &_item {
         display: flex;
         align-items: center;
@@ -40,6 +43,9 @@
           font-weight: 700;
           text-transform: capitalize;
           color: #fff;
+          @media (max-width: 768px) {
+            font-size: 13px;
+          }
         }
       }
     }
@@ -67,13 +73,15 @@
         color: #eee;
         font-size: 16px;
         font-weight: 500;
+        @media (max-width: 768px) {
+          font-size: 13px;
+        }
       }
     }
   }
   &_under {
     background-color: #000;
     height: 48px;
-    border-bottom: 1px solid #111;
     border-top: 1px solid #1a1a1a;
     padding: 0 10px;
     &_lists {

@@ -11,6 +11,10 @@
   position: fixed;
   bottom: 100px;
   right: 30px;
+  @media (max-width: 768px) {
+    bottom: 80px;
+  }
+
   &:hover {
     opacity: 0.7;
   }
