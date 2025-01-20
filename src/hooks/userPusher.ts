@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 import Pusher from "pusher-js";
+import { NofiticationsDataType } from "@/types/notifications";
 
 export const usePusher = (
   userId: string | undefined,
-  onStoryUpdated: (data: unknown) => void
+  onStoryUpdated: (data: NofiticationsDataType) => void
 ) => {
   useEffect(() => {
     if (!userId) return;

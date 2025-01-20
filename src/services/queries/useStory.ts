@@ -1,6 +1,12 @@
-import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { StoryWebtoonApi } from "../apiRequest";
 import { SearchResponseType } from "@/types/search";
+import { NofiticationsDataTypeResponse } from "@/types/notifications";
 
 export const useAddCommentMutatation = () => {
   return useMutation({
@@ -209,5 +215,40 @@ export const UseGetSearchStories = ({ query }: { query: string | null }) => {
       }
     },
     enabled: !!query,
+  });
+};
+
+export const useGetNotifications = () => {
+  return useQuery({
+    queryKey: ["getNotifications"],
+    queryFn: async () => {
+      const response: NofiticationsDataTypeResponse =
+        await StoryWebtoonApi.GetNotifications();
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+  });
+};
+
+export const useMarkNotifications = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ notifId }: { notifId: string }) => {
+      const response = await StoryWebtoonApi.MarkNotificationAsRead({
+        notifId,
+      });
+      if (response && response.status === "success") {
+        return response;
+      } else {
+        throw new Error(response.message);
+      }
+    },
+    mutationKey: ["markNotification"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getNotifications"] });
+    },
   });
 };

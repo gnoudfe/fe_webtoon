@@ -15,6 +15,7 @@ import { validateForm } from "@/utils/validateForm";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
+import { useGlobalStore } from "@/stores/state";
 const SettingPageSc = () => {
   const [password, setPassword] = React.useState("");
   const [newPassword, SetNewPassword] = React.useState("");
@@ -30,6 +31,7 @@ const SettingPageSc = () => {
     password?: string;
     newPassword?: string;
   }>({});
+  const { isLoggedIn } = useGlobalStore();
   const { data: user, isLoading } = useVerifyUser();
   const queryClient = useQueryClient();
   const handleChangePassword = async (e: React.FormEvent) => {
@@ -109,7 +111,7 @@ const SettingPageSc = () => {
       console.error("Error updating avatar:", error);
     }
   };
-
+  if (!isLoggedIn) return router.push("/login");
   if (isLoading) return null;
   return (
     <div className={styles.setting_page}>

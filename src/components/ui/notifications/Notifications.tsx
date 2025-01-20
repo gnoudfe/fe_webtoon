@@ -4,11 +4,56 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { Avatar } from "../avatar";
 import useDetectClickOutside from "@/hooks/useDetectClickOutside";
-const Notifications = () => {
+import {
+  useGetNotifications,
+  useMarkNotifications,
+} from "@/services/queries/useStory";
+import { NofiticationsDataType } from "@/types/notifications";
+import Link from "next/link";
+import { formatTime } from "@/utils/formatTime";
+import { usePusher } from "@/hooks/userPusher";
+
+const Notifications = ({ userId }: { userId: string }) => {
   const [isShow, setIsShow] = React.useState(false);
+  const [notifications, setNotifications] = React.useState<
+    NofiticationsDataType[]
+  >([]);
+
+  const { data: notificationsData } = useGetNotifications();
+
+  const notificationsMutate = useMarkNotifications();
+
+  // Xử lý khi có thông báo mới qua Pusher
+  const handleStoryUpdated = (data: NofiticationsDataType) => {
+    setNotifications((prev) => [data, ...prev]); // Thêm thông báo mới vào đầu danh sách
+  };
+
+  // Sử dụng hook usePusher để lắng nghe sự kiện real-time
+  usePusher(userId, handleStoryUpdated);
+
+  // Cập nhật thông báo khi dữ liệu ban đầu được tải
+  React.useEffect(() => {
+    if (notificationsData?.data) {
+      setNotifications(notificationsData.data);
+    }
+  }, [notificationsData]);
+
+  const handleReadNotification = async (notifId: string) => {
+    try {
+      await notificationsMutate.mutateAsync({ notifId });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const unReadNotifications = notifications.filter(
+    (notification) => !notification.isRead
+  );
+
   const handleClickAvatar = () => {
     setIsShow((prev) => !prev);
   };
+
   return (
     <div className={styles.header_auth_notifications_wrapper}>
       <div
@@ -17,8 +62,17 @@ const Notifications = () => {
       >
         <BellRing color="#fff" width={18} height={18} />
       </div>
-      <NotificationsNew />
-      <NotificationsInfor isShow={isShow} setIsShow={setIsShow} />
+      {unReadNotifications.length ? (
+        <NotificationsNew
+          totalUnReadNotifications={unReadNotifications.length}
+        />
+      ) : null}
+      <NotificationsInfor
+        isShow={isShow}
+        setIsShow={setIsShow}
+        notificationsData={notifications}
+        handleReadNotification={handleReadNotification}
+      />
     </div>
   );
 };
@@ -26,9 +80,16 @@ const Notifications = () => {
 interface NotificationsInforProps {
   isShow: boolean;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  notificationsData: NofiticationsDataType[];
+  handleReadNotification?: (notifId: string) => void;
 }
 
-const NotificationsInfor = ({ isShow, setIsShow }: NotificationsInforProps) => {
+const NotificationsInfor = ({
+  isShow,
+  setIsShow,
+  notificationsData,
+  handleReadNotification,
+}: NotificationsInforProps) => {
   const notificationInforRefs = React.useRef<HTMLDivElement | null>(null);
 
   useDetectClickOutside(notificationInforRefs, () => {
@@ -41,41 +102,67 @@ const NotificationsInfor = ({ isShow, setIsShow }: NotificationsInforProps) => {
         isShow ? styles.header_auth_notifications_infor_active : null
       }`}
     >
-      <NotificationsInforItem />
-      <NotificationsInforItem />
+      {notificationsData.map((notification, index) => (
+        <NotificationsInforItem
+          key={index}
+          notification={notification}
+          handleReadNotification={handleReadNotification}
+        />
+      ))}
+      {notificationsData?.length === 0 ? (
+        <div className={styles.header_auth_notifications_infor_empty}>
+          <span className={styles.header_auth_notifications_infor_empty_title}>
+            No notifications!
+          </span>
+        </div>
+      ) : null}
     </div>
   );
 };
 
-const NotificationsInforItem = () => {
+interface NotificationsInforItemProps {
+  notification: NofiticationsDataType;
+  handleReadNotification?: (notifId: string) => void;
+}
+
+const NotificationsInforItem = ({
+  notification,
+  handleReadNotification,
+}: NotificationsInforItemProps) => {
   return (
-    <div className={styles.header_auth_notifications_infor_item}>
-      <Avatar
-        previewImage={
-          "https://nemoitstore.com/cdn/shop/files/4_f2d1afa6-1beb-497d-90c7-388e4c170b4f.jpg?v=1720598788"
-        }
-        size="lg"
-      />
+    <Link
+      href={`/read/${notification?.link}`}
+      className={styles.header_auth_notifications_infor_item}
+      onClick={() => handleReadNotification?.(notification._id)}
+    >
+      <Avatar previewImage={notification?.thumbnail} size="lg" />
       <div className={styles.header_auth_notifications_infor_item_content}>
         <span
           className={styles.header_auth_notifications_infor_item_content_title}
         >
-          The story Stop Smoking has been updated
+          {notification?.message}
         </span>
         <span
           className={styles.header_auth_notifications_infor_item_content_time}
         >
-          1 min ago
+          {formatTime(notification?.createdAt)}
         </span>
       </div>
-    </div>
+      {!notification?.isRead && (
+        <div className={styles.header_auth_notifications_infor_item_dot}></div>
+      )}
+    </Link>
   );
 };
 
-const NotificationsNew = () => {
+const NotificationsNew = ({
+  totalUnReadNotifications,
+}: {
+  totalUnReadNotifications: number | null;
+}) => {
   return (
     <div className={styles.header_auth_notifications_new}>
-      <span>1</span>
+      <span>{totalUnReadNotifications}</span>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import ListStorySkeleton from "../list-story-skeleton";
 import InfiniteScroll from "../../InfiniteScroll";
 import { StoryDetailData } from "@/types/story";
 import StoryCard from "../../story-card";
+
 const ListStoryFollowing = () => {
   const {
     data,

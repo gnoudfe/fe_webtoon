@@ -7,6 +7,7 @@ import Sidebar from "@/components/app/sidebar";
 import SidebarSkeleton from "@/components/app/sidebar/sidebar-skeleton";
 import ListStorySkeleton from "@/components/ui/list-story/list-story-skeleton";
 import SlideStorySkeleton from "@/components/ui/slideStory/slide-story-skeleton";
+import AddNewStory from "./add-new-story";
 
 const HomePage = async () => {
   return (
@@ -17,6 +18,7 @@ const HomePage = async () => {
         </Suspense>
       </div>
       <div className={styles.home_page_container}>
+        <AddNewStory />
         <section className={styles.home_page_section}>
           <SectionHeader title="Highlight Manhwa Updates" />
           <Suspense fallback={<SlideStorySkeleton />}>

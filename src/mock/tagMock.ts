@@ -20,7 +20,6 @@ export const DataMockResponse = {
     {
       _id: "678613f7cc5d54f473d73795",
       slug: "read",
-      name: "Hentai",
     },
     {
       _id: "678613f7cc5d54f473d73796",

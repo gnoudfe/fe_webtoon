@@ -53,5 +53,8 @@ export const APP_API_ENDPOINT = Object.freeze({
     GET_STORY_HISTORY: (page: number | null, limit: number | null) =>
       `/reading-history?page=${page}&limit=${limit}`,
     SEARCH_STORY: (query: string | null) => `/search?query=${query}`,
+    GET_NOTIFICATIONS: () => `/get-notifications`,
+    MARK_NOTIFICATIONS: (notifId: string) => `/${notifId}/mark-as-read`,
+    SCRAPE_STORY: (url: string | null) => `/scrape?url=${url}`,
   },
 });

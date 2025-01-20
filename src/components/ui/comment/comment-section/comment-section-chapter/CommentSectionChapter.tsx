@@ -113,6 +113,10 @@ const CommentSectionChapter = ({
             slugChapter,
           ],
         });
+        queryClient.invalidateQueries({
+          queryKey: ["comments", pagination.currentPage, storySlug],
+          refetchType: "all",
+        });
         setComment("");
       }
     } catch (error) {
@@ -133,6 +137,10 @@ const CommentSectionChapter = ({
             storySlug,
             slugChapter,
           ],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["comments", pagination.currentPage, storySlug],
+          refetchType: "all",
         });
       }
     } catch (error) {
@@ -156,6 +164,10 @@ const CommentSectionChapter = ({
             storySlug,
             slugChapter,
           ],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["comments", pagination.currentPage, storySlug],
+          refetchType: "all",
         });
         setIsEditComment(null);
         setEditComment("");

@@ -1,6 +1,6 @@
 import CategoryPage from "@/pages/category-page/CategoryPage";
 import React from "react";
-const TagHentaiPage = async ({
+const TagContainer = async ({
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -9,4 +9,4 @@ const TagHentaiPage = async ({
   return <CategoryPage slug={slug} type="tag" />;
 };
 
-export default TagHentaiPage;
+export default TagContainer;

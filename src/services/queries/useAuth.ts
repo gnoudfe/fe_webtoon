@@ -4,6 +4,7 @@ import {
   useMutation,
   UseMutationOptions,
   useQuery,
+  useQueryClient,
 } from "@tanstack/react-query";
 import { useGlobalStore } from "@/stores/state";
 import { AuthWebtoonApi } from "../apiRequest";
@@ -54,12 +55,16 @@ export const useVerifyUser = () => {
 };
 
 export const useLogoutMutation = (options?: UseMutationOptions<any>) => {
+  const queryClient = useQueryClient();
   const { setIsLoggedIn } = useGlobalStore();
 
   return useMutation({
     ...options,
     mutationFn: async () => await AuthWebtoonApi.Logout(),
-    onSuccess: () => setIsLoggedIn(false),
+    onSuccess: () => {
+      queryClient.clear();
+      setIsLoggedIn(false);
+    },
     mutationKey: ["logout"],
   });
 };

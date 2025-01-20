@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./styles.module.scss";
 // import Image from "next/image";
-import { BookMarked, History, Tag } from "lucide-react";
+import { BookMarked, History } from "lucide-react";
 import SearchHeader from "@/components/ui/search/search-header";
 import Link from "next/link";
 import { useVerifyUser } from "@/services/queries/useAuth";
@@ -25,23 +25,21 @@ const Header = () => {
             </div>
           </Link>
           <ul className={styles.header_left_actions}>
-            <li className={styles.header_left_actions_item}>
-              <Tag />
-              <span className={styles.header_left_actions_item_text}>Tags</span>
-            </li>
-
-            <li className={styles.header_left_actions_item}>
+            <Link
+              href={"/following"}
+              className={styles.header_left_actions_item}
+            >
               <BookMarked />
-              <Link href={"/following"} className={styles.header_left_actions_item_text}>
+              <span className={styles.header_left_actions_item_text}>
                 Bookmark
-              </Link>
-            </li>
-            <li className={styles.header_left_actions_item}>
+              </span>
+            </Link>
+            <Link href={"/history"} className={styles.header_left_actions_item}>
               <History />
-              <Link href={"/history"} className={styles.header_left_actions_item_text}>
+              <span className={styles.header_left_actions_item_text}>
                 History
-              </Link>
-            </li>
+              </span>
+            </Link>
           </ul>
         </div>
         <div className={styles.header_right}>
@@ -62,7 +60,9 @@ const Header = () => {
             </div>
           )}
           {/* notifications  */}
-          {isLoggedIn && !isLoading && <Notifications />}
+          {isLoggedIn && !isLoading && (
+            <Notifications userId={user?.data?._id} />
+          )}
           {/* Profile Avatar */}
           {isLoggedIn && !isLoading && (
             <Avatar userData={user?.data} isShowInfor={true} />

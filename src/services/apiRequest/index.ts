@@ -352,6 +352,37 @@ class StoryWebtoonApiRequest {
       },
     });
   }
+
+  public GetNotifications(): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.GET_NOTIFICATIONS(),
+      config: {
+        method: "GET",
+      },
+    });
+  }
+
+  public MarkNotificationAsRead({
+    notifId,
+  }: {
+    notifId: string;
+  }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.MARK_NOTIFICATIONS(notifId),
+      config: {
+        method: "PATCH",
+      },
+    });
+  }
+
+  public ScrapeStory({ url }: { url: string }): Promise<any> {
+    return apiBaseServiceInstance.Http({
+      path: APP_API_ENDPOINT.STORY.SCRAPE_STORY(url),
+      config: {
+        method: "GET",
+      },
+    });
+  }
 }
 
 const AuthWebtoonApi = new AuthWebtoonApiRequest();
