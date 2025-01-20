@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { APP_API_ENDPOINT } from "@/constant/endPoints";
 import { apiBaseServiceInstance } from "../api";
 

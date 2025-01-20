@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useEffect } from "react";
 import Pusher from "pusher-js";
 import { NofiticationsDataType } from "@/types/notifications";

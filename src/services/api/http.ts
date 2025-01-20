@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { CustomFetchConfig } from "@/constant/type";
 
 export class ApiClient {

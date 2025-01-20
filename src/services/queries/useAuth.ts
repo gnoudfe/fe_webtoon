@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { AuthCredentials, ChangePassword } from "@/constant/type";
 import {
   useMutation,
