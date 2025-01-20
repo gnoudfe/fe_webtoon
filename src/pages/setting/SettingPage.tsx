@@ -111,7 +111,9 @@ const SettingPageSc = () => {
       console.error("Error updating avatar:", error);
     }
   };
-  if (!isLoggedIn) return router.push("/login");
+  if (!isLoggedIn) {
+    router.push("/login");
+  }
   if (isLoading) return null;
   return (
     <div className={styles.setting_page}>

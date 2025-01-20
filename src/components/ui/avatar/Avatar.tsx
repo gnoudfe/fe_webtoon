@@ -2,7 +2,12 @@
 "use client";
 import React, { useState, useRef } from "react";
 import styles from "./styles.module.scss";
-import { ArchiveIcon, HistoryIcon, LogOutIcon, Settings2Icon } from "lucide-react";
+import {
+  ArchiveIcon,
+  HistoryIcon,
+  LogOutIcon,
+  Settings2Icon,
+} from "lucide-react";
 import { useLogoutMutation } from "@/services/queries/useAuth";
 import Link from "next/link";
 import useDetectClickOutside from "@/hooks/useDetectClickOutside";
@@ -45,6 +50,7 @@ const Avatar: React.FC<AvatarProps> = ({
         src={previewImage || userData?.avatar || "/default-avatar.png"}
         alt="User Avatar"
       />
+    
       {isShowInfor && (
         <AvatarInfor
           isShow={isShow}
@@ -115,9 +121,7 @@ const AvatarInfor: React.FC<AvatarInforProps> = ({
       </Link>
       <Link href="/history" className={styles.header_avatar_infor_lists_item}>
         <HistoryIcon size={20} color="#000" />
-        <p className={styles.header_avatar_infor_lists_item_text}>
-          My History
-        </p>
+        <p className={styles.header_avatar_infor_lists_item_text}>My History</p>
       </Link>
       <div
         className={styles.header_avatar_infor_lists_item}

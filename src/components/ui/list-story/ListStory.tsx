@@ -15,11 +15,11 @@ const ListStory = async () => {
   return (
     <>
       <div className={`${styles.list_story}`}>
-        {latestStories?.data.map((story) => (
+        {latestStories?.data?.map((story) => (
           <StoryCard key={story._id} storyData={story} />
         ))}
       </div>
-      {latestStories?.data.length > 15 && (
+      {latestStories?.data?.length > 15 && (
         <ButtonAuth title="View more" link="/latest" />
       )}
     </>

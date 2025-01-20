@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import styles from "./styles.module.scss";
-import DetailPageHero from "./_components/detail-page-hero/DetailPageHero";
 import SummaryContent from "./_components/summary-content/SummaryContent";
 import Sidebar from "@/components/app/sidebar";
 import ListChapters from "./_components/list-chapters/ListChapters";
@@ -9,6 +8,7 @@ import HeroSkeleton from "./_components/detail-page-hero/skeleton-hero";
 import SummatySkeleton from "./_components/summary-content/summary-skeleton";
 import ChapterSkeleton from "./_components/list-chapters/chapters-skeleton";
 import SidebarSkeleton from "@/components/app/sidebar/sidebar-skeleton";
+import DetailPageHero from "./_components/detail-page-hero";
 interface DetailPageProps {
   slug: string;
 }
