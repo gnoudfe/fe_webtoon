@@ -11,9 +11,9 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/023/192/562/small_2x/sport-car-running-on-the-road-in-future-city-created-with-generative-ai-free-photo.jpg");
+    background-image: url("https://pbs.twimg.com/media/GQe17kuXMAA3yuw.jpg:large");
     background-repeat: round;
-    filter: blur(10px);
+    background-size: contain;
   }
   &_container {
     display: block;
@@ -24,6 +24,9 @@
     box-shadow: 0px 1px 30px rgb(0 0 0 / 1);
     background: rgba(0, 0, 0, 0.9);
     border-radius: 12px;
+    background-image: url("https://animegenius-global.live3d.io/vtuber/ai_product/anime_genius/static/imgs/81ed05520c3ec53de5509ab7c4370b2e.webp");
+    background-repeat: round;
+    background-size: contain; 
     &_input {
       display: flex;
       flex-direction: column;

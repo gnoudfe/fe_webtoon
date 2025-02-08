@@ -48,8 +48,8 @@ const ListStoryType = ({
       hasMore={hasNextPage || !isFetchingNextPage}
     >
       <div className={`${styles.list_story_category}`}>
-        {typeStories?.map((story: StoryDetailData) => (
-          <StoryCard key={story._id} storyData={story} />
+        {typeStories?.map((story: StoryDetailData, index: number) => (
+          <StoryCard key={index} storyData={story} />
         ))}
       </div>
     </InfiniteScroll>

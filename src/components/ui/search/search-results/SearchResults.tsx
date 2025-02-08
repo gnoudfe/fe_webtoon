@@ -11,7 +11,6 @@ interface SearchResultsProps {
 }
 
 const SearchResults = ({ listStory, errorMessage }: SearchResultsProps) => {
-  console.log("re-redner");
   return (
     <ul className={styles.search_results}>
       {listStory.map((story) => (
